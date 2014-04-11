@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="3dip"
+    android:id="@+id/memberheader" >
+
+    <Spinner
+        android:id="@+id/spinnersessionheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/image"
+        android:entries="@array/zoomlevel"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:visibility="visible" />
+
+
+    <TextView
+        android:id="@+id/checkboxtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/spinnersessionheader"
+        android:layout_marginLeft="5dip"
+        android:gravity="bottom"
+        android:padding="2dip"
+        android:text="Select All"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/gray" />
+
+    <CheckBox
+        android:id="@+id/checkboxheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/spinnersessionheader"
+        android:button="@drawable/checkboxselector"
+        android:checked="true"
+        android:paddingBottom="2dip"
+        android:paddingRight="2dip"
+        android:text=""
+        android:onClick="ClickHandler"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:visibility="visible" />
+
+</RelativeLayout>

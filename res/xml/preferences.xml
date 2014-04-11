@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="account_category"
+        android:title="@string/accountcategorytitle" >
+        <Preference
+            android:key="newuser"
+            android:summary="@string/newusersummary"
+            android:title="@string/newusertitle" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.dispatch_x12.NewUser"
+                android:targetPackage="com.dispatch_x12" >
+                <extra
+                    android:name="memberid"
+                    android:value="0" />
+            </intent>
+        </Preference>
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogMessage="@string/loginsettingdialogmessage"
+            android:dialogTitle="@string/loginsettingdialogtitle"
+            android:hint="@string/loginsettingshint"
+            android:key="login_settings"
+            android:summary="@string/loginsettingsummary"
+            android:title="@string/loginsettingstitle" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:dependency="login_settings"
+            android:dialogIcon="@drawable/appicon"
+            android:dialogMessage="@string/loginmemberiddialogmessage"
+            android:dialogTitle="@string/loginmemberiddialogtitle"
+            android:enabled="true"
+            android:key="login_memberid"
+            android:summary="@string/loginmemberidsummary"
+            android:title="@string/loginmemberidtitle" />
+
+        <Preference
+            android:dependency="login_settings"
+            android:key="changepassword"
+            android:summary="@string/changepasswordsummary"
+            android:title="@string/changepasswordtitle" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.dispatch_x12.ChangePassword"
+                android:targetPackage="com.dispatch_x12" >
+            </intent>
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="company_category"
+        android:title="@string/companycategory" >
+        <EditTextPreference
+            android:defaultValue=""
+            android:dependency="login_settings"
+            android:dialogIcon="@drawable/appicon"
+            android:dialogMessage="@string/companynamedialogmessage"
+            android:dialogTitle="@string/companynamedialogtitle"
+            android:enabled="true"
+            android:hint="@string/companynamehint"
+            android:key="companyname"
+            android:summary="@string/companynamesummary"
+            android:title="@string/companynametitle" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:dependency="login_settings"
+            android:dialogIcon="@drawable/appicon"
+            android:dialogMessage="@string/companyiddialogmessage"
+            android:dialogTitle="@string/companyiddialogtitle"
+            android:enabled="true"
+            android:key="companyid"
+            android:summary="@string/companyidsummary"
+            android:title="@string/companytitle" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="map_options"
+        android:title="@string/map_options_title" >
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/mapprovider"
+            android:entryValues="@array/mapProviderValue"
+            android:key="mapprovider"
+            android:summary="@string/mapprovidertypesummary"
+            android:title="@string/mapprovidertypetitle" />
+        <ListPreference
+            android:defaultValue="4"
+            android:entries="@array/routeprovider"
+            android:entryValues="@array/routeProviderValue"
+            android:key="routeprovider"
+            android:summary="@string/routeprovidersummary"
+            android:title="@string/routeprovidertitle" />
+        <ListPreference
+            android:defaultValue="8"
+            android:entries="@array/zoomlevel"
+            android:entryValues="@array/zoomlevel"
+            android:key="zoomlevel"
+            android:summary="@string/zoomlevelsummary"
+            android:title="@string/zoomleveltitle" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/uom"
+            android:entryValues="@array/uomValue"
+            android:key="uom"
+            android:summary="@string/uomsummary"
+            android:title="@string/uomtitle" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="network_category"
+        android:title="@string/networkingcategory_title" >
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="login_settings"
+            android:key="networkingonoff"
+            android:summary="@string/networkingonoff_summary"
+            android:title="@string/networkingonoff_title" />>
+        <EditTextPreference
+            android:defaultValue="@string/networkiddefault"
+            android:dependency="login_settings"
+            android:dialogIcon="@drawable/appicon"
+            android:dialogMessage="@string/networkiddalogmessage"
+            android:dialogTitle="@string/networkiddialogtitle"
+            android:enabled="true"
+            android:key="networkid"
+            android:summary="@string/networkidsummary"
+            android:title="@string/networkidtitle" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

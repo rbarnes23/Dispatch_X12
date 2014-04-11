@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customerMaster"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="48dp"
+    android:layout_marginTop="8dp"
+    android:background="@color/white"
+    android:descendantFocusability="afterDescendants" >
+
+    <!-- Name Information -->
+
+    <TextView
+        android:id="@+id/firstNameHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:padding="16dp"
+        android:text="First Name"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/firstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/firstNameHeading"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/firstNameHeading"
+        android:enabled="true"
+        android:hint="Enter First Name"
+        android:imeOptions="actionNext"
+        android:inputType="textCapWords"
+        android:nextFocusForward="@+id/lastName"
+        android:textColor="@color/blue"
+        android:textDirection="locale"
+        android:textSize="@dimen/text_size" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/lastNameHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/firstNameHeading"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/firstName"
+        android:text="Last Name"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/firstNameHeading"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/lastNameHeading"
+        android:enabled="true"
+        android:hint="Enter Last Name"
+        android:imeOptions="actionNext"
+        android:inputType="textCapWords"
+        android:nextFocusForward="@+id/userTypeSpinner"
+        android:textColor="@color/blue"
+        android:textDirection="locale"
+        android:textSize="@dimen/text_size" >
+    </EditText>
+
+    <TextView
+        android:id="@+id/userTypeHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/firstNameHeading"
+        android:layout_marginLeft="128dp"
+        android:layout_toRightOf="@+id/lastName"
+        android:text="Type"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <Spinner
+        android:id="@+id/userTypeSpinner"
+        android:layout_width="@dimen/dropdown_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/firstNameHeading"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/userTypeHeading"
+        android:entries="@array/employeeClassification"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="visible" />
+
+    <!-- Name Information -->
+
+    <TextView
+        android:id="@+id/blankSpacer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/userNameHeading"
+        android:layout_below="@+id/iccHeading"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="16dp"
+        android:text=""
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+</RelativeLayout>

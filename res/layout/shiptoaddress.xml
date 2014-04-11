@@ -1,0 +1,99 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <TextView
+        android:id="@+id/shipper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/driver"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="10sp"
+        android:text="@string/shipper"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/blue" />
+
+    <TextView
+        android:id="@+id/shipmentId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/memberEntry"
+        android:layout_gravity="center_vertical"
+        android:gravity="bottom"
+        android:text="ID: "
+        android:layout_toRightOf="@+id/shipper"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/blue" />
+    
+    
+    <TextView
+        android:id="@+id/shipmentIdentificationNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/memberEntry"
+        android:layout_gravity="center_vertical"
+        android:gravity="bottom"
+        android:layout_toRightOf="@+id/shipmentId"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/blue" />
+
+    <TextView
+        android:id="@+id/shipperName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/shipper"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/blue"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/shipperAddress1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/shipperName"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/blue"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/shipperAddress2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/shipperAddress1"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/blue"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/shipperCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/shipperAddress2"
+        android:layout_marginRight="5sp"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/blue" />
+
+    <TextView
+        android:id="@+id/shipperState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shipperAddress2"
+        android:layout_marginRight="5sp"
+        android:layout_toRightOf="@+id/shipperCity"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/blue" />
+
+    <TextView
+        android:id="@+id/shipperPostalCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shipperAddress2"
+        android:layout_toRightOf="@+id/shipperState"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/blue" />
+
+</merge>

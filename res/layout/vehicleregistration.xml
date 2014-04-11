@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vehiclereg_header_row_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4sp"
+    android:layout_marginTop="16sp"
+    android:background="@color/white"
+    android:descendantFocusability="afterDescendants"
+    android:orientation="vertical" >
+
+    <!-- Row 1 -->
+
+    <TextView
+        android:id="@+id/registeredToHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/companyNameHeading"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:text="Registered To"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/registeredTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/registeredToHeading"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/registeredToHeading"
+        android:hint="Company Name"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:minWidth="120dp"
+        android:nextFocusForward="@+id/typeSpinner"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/typeHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/registeredToHeading"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/registeredTo"
+        android:text="Type"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/typeSpinner"
+        android:layout_width="@dimen/dropdown_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/registeredToHeading"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/typeHeading"
+        android:entries="@array/vehicleType"
+        android:nextFocusForward="@+id/colorSpinner"
+        android:spinnerMode="dropdown"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/colorHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/registeredToHeading"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/typeSpinner"
+        android:text="Color"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/colorSpinner"
+        android:layout_width="@dimen/dropdown_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/registeredToHeading"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/colorHeading"
+        android:entries="@array/colorType"
+        android:nextFocusForward="@+id/color"
+        android:spinnerMode="dropdown"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/deleteIndicator"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16sp"
+        android:background="@drawable/btn_delete"
+        android:contentDescription="Delete Vehicle "
+        android:visibility="visible" />
+
+    <!-- Row 2 -->
+
+    <TextView
+        android:id="@+id/plateHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/registeredToHeading"
+        android:layout_below="@+id/registeredToHeading"
+        android:layout_marginBottom="8dp"
+        android:text="Plate"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <EditText
+        android:id="@+id/plate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/plateHeading"
+        android:layout_alignLeft="@+id/registeredTo"
+        android:layout_marginBottom="8dp"
+        android:layout_toRightOf="@+id/plateHeading"
+        android:hint="Enter Plate No"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:minWidth="240dp"
+        android:nextFocusForward="@+id/decal"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/decalHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/plateHeading"
+        android:layout_alignLeft="@+id/typeHeading"
+        android:layout_marginBottom="8dp"
+        android:layout_toRightOf="@+id/decalHeading"
+        android:text="Decal"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <EditText
+        android:id="@+id/decal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/plateHeading"
+        android:layout_alignLeft="@+id/typeSpinner"
+        android:layout_marginBottom="8dp"
+        android:layout_toRightOf="@+id/decalHeading"
+        android:hint="Enter Decal No"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:minWidth="240dp"
+        android:nextFocusForward="@+id/expires"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/expiresHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/plateHeading"
+        android:layout_alignLeft="@+id/colorHeading"
+        android:layout_marginBottom="8dp"
+        android:layout_toRightOf="@+id/decal"
+        android:text="Expires"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <EditText
+        android:id="@+id/expires"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/plate"
+        android:layout_alignLeft="@+id/color"
+        android:layout_marginBottom="8dp"
+        android:layout_toRightOf="@+id/expiresHeading"
+        android:hint="Enter Expiration Date"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:minWidth="120dp"
+        android:nextFocusForward="@+id/typeSpinner"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:visibility="visible" />
+
+    <!-- Row 3 -->
+
+    <TextView
+        android:id="@+id/yearHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/plateHeading"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:text="Year"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/yearSpinner"
+        android:layout_width="@dimen/dropdown_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/yearHeading"
+        android:layout_alignLeft="@+id/plate"
+        android:layout_toRightOf="@+id/yearHeading"
+        android:entries="@array/yearArray"
+        android:nextFocusForward="@+id/makeSpinner"
+        android:spinnerMode="dropdown"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/makeHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/yearHeading"
+        android:layout_alignLeft="@+id/decalHeading"
+        android:layout_marginBottom="8dp"
+        android:text="Make"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/makeSpinner"
+        android:layout_width="@dimen/dropdown_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/yearHeading"
+        android:layout_alignLeft="@+id/decal"
+        android:layout_toRightOf="@+id/makeHeading"
+        android:entries="@array/makeArray"
+        android:nextFocusForward="@+id/modelSpinner"
+        android:spinnerMode="dropdown"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/modelHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/yearHeading"
+        android:layout_alignLeft="@+id/expiresHeading"
+        android:layout_marginBottom="8dp"
+        android:text="Model"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/modelSpinner"
+        android:layout_width="@dimen/dropdown_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/yearHeading"
+        android:layout_alignLeft="@+id/expires"
+        android:layout_toRightOf="@+id/modelHeading"
+        android:entries="@array/modelArray"
+        android:nextFocusForward="@+id/color"
+        android:spinnerMode="dropdown"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="visible" />
+    <!-- Row 4 -->
+
+    <Button
+        android:id="@+id/addVehicle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/registeredTo"
+        android:layout_below="@+id/yearHeading"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:text="Add Vehicle"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+</RelativeLayout>

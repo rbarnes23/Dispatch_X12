@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <group android:id="@+id/group_default" >
+        <item
+            android:id="@+id/menu_edit"
+            android:actionLayout="@layout/actionbaredittext"
+            android:showAsAction="never"
+            android:title="">
+        </item>
+        <item
+            android:id="@+id/chat"
+            android:icon="@android:drawable/sym_action_chat"
+            android:showAsAction="always"
+            android:title="@string/chat"
+            android:titleCondensed="@string/chat">
+        </item> 
+        <item
+            android:id="@+id/fonts"
+            android:icon="@drawable/flogo"
+            android:showAsAction="never"
+            android:title="@string/fonts"
+            android:titleCondensed="@string/fonts">
+        </item>
+        <item
+            android:id="@+id/angles"
+            android:icon="@drawable/protractor"
+            android:showAsAction="never"
+            android:title="@string/angle"
+            android:titleCondensed="@string/friendstext">
+        </item>
+        <item
+            android:id="@+id/friends"
+            android:icon="@drawable/friends"
+            android:showAsAction="never"
+            android:title="@string/friendstext"
+            android:titleCondensed="@string/friendstext">
+        </item>
+        <item
+            android:id="@+id/setup"
+            android:icon="@android:drawable/ic_menu_preferences"
+            android:showAsAction="never"
+            android:title="@string/setuptext"
+            android:titleCondensed="@string/setuptext">
+        </item>
+        <item
+            android:id="@+id/information"
+            android:icon="@android:drawable/sym_action_chat"
+            android:showAsAction="never"
+            android:title="@string/information"
+            android:titleCondensed="@string/information">
+        </item>
+        <item
+            android:id="@+id/about"
+            android:icon="@android:drawable/ic_menu_help"
+            android:showAsAction="never"
+            android:title="@string/abouttext"
+            android:titleCondensed="@string/abouttext">
+        </item>
+    </group>
+
+</menu>

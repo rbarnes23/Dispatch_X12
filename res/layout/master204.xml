@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarSize="15dp"
+	android:fillViewport="true"
+    android:scrollbarStyle="insideOverlay"
+    android:scrollbars="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/loadMaster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/companyName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_heading" />
+
+        <TextView
+            android:id="@+id/identificationCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:id="@+id/idDash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/identificationCode"
+            android:gravity="center_horizontal"
+            android:text="-"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:id="@+id/identificationCodeQualifier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/idDash"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:id="@+id/driver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/companyName"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginRight="5sp"
+            android:text="@string/drivers"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/blue" />
+
+        <com.dispatch_x12.CustomAutoCompleteTextView
+            android:id="@+id/memberEntry"
+            android:layout_width="@dimen/dropdown_size"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/companyName"
+            android:layout_toRightOf="@+id/driver"
+            android:completionThreshold="1"
+            android:hint="@string/member_hint"
+            android:paddingBottom="10dp"
+            android:paddingTop="5dp"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/blue"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/driversSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/companyName"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginRight="5sp"
+            android:layout_toRightOf="@+id/memberEntry"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/blue"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/companyName"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginRight="2dp"
+            android:layout_toLeftOf="@+id/spinnerStatus"
+            android:text="@string/status"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/blue" />
+
+        <Spinner
+            android:id="@+id/spinnerStatus"
+            android:layout_width="@dimen/dropdown_size"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/companyName"
+            android:entries="@array/freightstatus"
+            android:paddingBottom="10dp"
+            android:paddingTop="5dp"
+            android:textSize="@dimen/text_size_small"
+            android:visibility="visible" />
+
+        <include layout="@layout/billtoaddress" />
+
+        <include layout="@layout/shiptoaddress" />
+
+        <TextView
+            android:id="@+id/specialInstructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/shipperCity"
+            android:layout_marginTop="20sp"
+            android:text="@string/specialInstructions"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/blue" />
+
+        <TextView
+            android:id="@+id/specialInstructionsDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/specialInstructions"
+            android:text="Reefer required"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/blue" />
+
+        <TextView
+            android:id="@+id/contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/specialInstructionsDetail"
+            android:layout_marginTop="20sp"
+            android:text="@string/contacts"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/blue" />
+
+        <TextView
+            android:id="@+id/contactInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contacts"
+            android:text="Contact Test"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/blue" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/black"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</ScrollView>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Used in ISA -Qualifier ID's -->
+    <string-array name="isaQualifierID">
+        <item name="01">Duns #</item>
+        <item name="08">UCC EDI #</item>
+        <item name="12">Phone #</item>
+        <item name="14">Duns + Suffix#</item>
+        <item name="ZZ">Mutually Defined</item>
+    </string-array>
+    <!-- Used in ISA -Qualifier Usage Indicator -->
+    <string-array name="isaUsageIndicator">
+        <item name="P">P</item>
+        <item name="T">T</item>
+    </string-array>
+
+    <!-- Used in L103 Rate/Value Qualifier -->
+    <string-array name="rateValueQualifier">
+        <item name="FC">Flat Charge</item>
+        <item name="FUE">Fuel Surcharge</item>
+        <item name="SC">Stop Charge</item>
+        <item name="LD">Loading Fee</item>
+        <item name="ULD">Unloading Fee</item>
+        <item name="PM">Per Mile</item>
+        <item name="PL">Per Load</item>
+        <item name="PR">Per Hour</item>
+        <item name="APT">Appointment Charge</item>
+        <item name="RCL">Redelivery Charge</item>
+        <item name="DSC">Discount</item>
+        <item name="ZZZ">Mutually Defined</item>
+        <item name="DEM">Demurrage Charge</item>
+        <item name="EXD">Extra Driver</item>
+        <item name="DCT">City Delivery</item>
+        <item name="IDL">Inside Delivery Charge</item>
+        <item name="AS">Accesorial Charge</item>
+        <item name="BLK">Blocking and Bracing Charge</item>
+        <item name="BOB">Bobtail Charge</item>
+        <item name="CLN">Cleaning Charger</item>
+        <item name="COD">COD Amount</item>
+        <item name="COL">Fee for Collecting COD Charge</item>
+        <item name="DEL">Delivery Charge</item>
+        <item name="DMC">DeadHead Mileage Charge</item>
+        <item name="DOC">Documentation Charge</item>
+        <item name="EXC">Exclusive Use Charge</item>
+        <item name="HAZ">Hazardous Charge</item>
+        <item name="INC">Insurance SurCharge</item>
+        <item name="MIN">Minimum Charge</item>
+        <item name="PUC">Pick Up Charge</item>
+        <item name="PUD">Pick Up and DeliveryCharge</item>
+        <item name="CW">Per Hundred Weight</item>
+        <item name="DV">Per Day Per Vehicle</item>
+        <item name="LB">Per Pound</item>
+        <item name="MR">Per Mile per Vehicle used per Round Trip</item>
+        <item name="PD">Per Day</item>
+        <item name="PI">Hourly Rate Per Vehicle</item>
+        <item name="PP">Per Piece</item>
+        <item name="PS">Per Shipment</item>
+        <item name="PV">Per Vehicle</item>
+        <item name="PW">Percentage of Charges</item>
+        <item name="RP">Percent of Rate</item>
+        <item name="RT">Per Vehicle Used Per Round Trip</item>
+        <item name="VH">Per Vehicle Used</item>
+        <item name="WK">Per Week</item>
+        <item name="YR">Per Year</item>
+    </string-array>
+
+    <!-- Used in L11 Business Instructions and Reference Number -->
+    <string-array name="referenceIdentificationQualifier">
+        <item name="BM">BOL Number</item>
+        <item name="DJ">Delivery Number</item>
+        <item name="BK">Booking Number</item>
+        <item name="SI">Shipment Identification Number</item>
+    </string-array>
+
+    <!-- Used in Q7 Lading Exception Code -->
+    <string-array name="ladingExceptionCode">
+        <item name="A">All Short</item>
+        <item name="D">Damaged</item>
+        <item name="E">Entire Shipment Refused</item>
+        <item name="O">Overage</item>
+        <item name="P">Partial Shipment</item>
+        <item name="W">Wrong Product</item>
+    </string-array>
+
+    <!-- Used in Q7 Lading Exception Code -->
+    <string-array name="packagingFormCode">
+        <item name="BAG">Bag</item>
+        <item name="BDL">Bundle</item>
+        <item name="BBL">Barrel</item>
+        <item name="BIN">Bin</item>
+        <item name="BOX">Box</item>
+        <item name="CAG">Cage</item>
+        <item name="CAN">Can</item>
+        <item name="CNT">Container</item>
+        <item name="CRT">Crate</item>
+        <item name="CTN">Carton</item>
+        <item name="CYL">Cylinder</item>
+        <item name="DBK">Dry Bulk</item>
+        <item name="ENV">Envelope</item>
+        <item name="GOH">Garments on Hangar</item>
+        <item name="JAR">Jar</item>
+        <item name="KEG">Keg</item>
+        <item name="LBK">Liquid Bulk</item>
+        <item name="PCS">Pieces</item>
+        <item name="PKG">Package</item>
+        <item name="PLT">Pallet</item>
+        <item name="RCK">Rack</item>
+        <item name="SKD">Skid</item>
+        <item name="SLP">Slip Sheet</item>
+        <item name="TBE">Tube</item>
+        <item name="TRY">Tray</item>
+        <item name="UNT">Unit</item>
+        <item name="VEH">Vehicle</item>
+        <item name="WRP">Wrapped</item>
+    </string-array>
+    <string-array name="equipmentDescriptionCodes">
+        <item name="AP">Aircraft</item>
+        <item name="BR">Barge</item>
+        <item name="BX">Box</item>
+        <item name="CC">Container</item>
+        <item name="CH">Chassis</item>
+        <item name="CN">Container</item>
+        <item name="CX">Container, Tank</item>
+        <item name="DD">Double-Drop Flatbed</item>
+        <item name="FF">Frozen Food Trailer</item>
+        <item name="FR">Flatbed Removable Sides</item>
+        <item name="FT">Standard Flatbed</item>
+        <item name="HC">Hopper Car (Covered)</item>
+        <item name="OT">Open-top/flatbed trailer</item>
+        <item name="OV">Open TopVan</item>
+        <item name="RA">Fixed-Rack Flat-Bed, A-Frame Trailer</item>
+        <item name="RD">Fixed-Rack Double Drop, A-Frame Trailer</item>
+        <item name="RR">Rail Car</item>
+        <item name="RS">Fixed-Rack Single Drop, A-Frame Trailer</item>
+        <item name="RT">Temperature-controlledVan</item>
+        <item name="SD">Single Drop Deck Flatbed</item>
+        <item name="ST">Removable Side Trailer</item>
+        <item name="TA">Heated/Insulated/VentilatedVan</item>
+        <item name="TB">Boat Trailer</item>
+        <item name="TF">DryVan</item>
+        <item name="TG">Tanker – Gas</item>
+        <item name="TI">InsulatedVan</item>
+        <item name="TJ">Tanker-Chemical</item>
+        <item name="TK">Tanker-Food Grade</item>
+        <item name="TM">Insulated/Ventilated Trailer</item>
+        <item name="TN">Tank Car</item>
+        <item name="TP">Pneumatic Trailer</item>
+        <item name="TQ">Electric Heat Trailer</item>
+        <item name="TR">Tractor</item>
+        <item name="TV">TruckVanTanker – Gas</item>
+        <item name="TW">Refrigerated Trailer</item>
+        <item name="VT">Vessel, Ocean, Containership</item>
+    </string-array>
+    <string-array name="equipmentLength">
+        <item name="2000">20 Foot Trailer</item>
+        <item name="4000">40 Foot Trailer</item>
+        <item name="4500">45 Foot Trailer</item>
+        <item name="4800">48 Foot Trailer</item>
+        <item name="5300">53 Foot Trailer</item>
+        <item name="5700">57 Foot Trailer</item>
+        <item name="6000">60 Foot Trailer</item>
+        <item name="7000">70 Foot Trailer</item>
+        <item name="8000">80 Foot Trailer</item>
+    </string-array>
+    <string-array name="equipmentType">
+        <item name="AAAA">Air Ride</item>
+        <item name="BPBP">Bulk Pneumatic</item>
+        <item name="BTBT">B-Train</item>
+        <item name="BZBZ">Bulk Pneumatic Food Grade</item>
+        <item name="CBCB">CBCB Chassis, Gooseneck</item>
+        <item name="CUCU">Center Unload – Tanker Only</item>
+        <item name="DCDC">Temp-ControlVan, Carcass</item>
+        <item name="DPDP">Dump Truck</item>
+        <item name="DTDT">Dual Temperature</item>
+        <item name="HBHB">Container with Hanger Bars (Logistics)</item>
+        <item name="HVHV">High Cube Van</item>
+        <item name="KGKG">Cage</item>
+        <item name="MCMC">Multi-Compartment</item>
+        <item name="MXMX">Maxi</item>
+        <item name="OLOL">Over Length</item>
+        <item name="RLRL">Ramp/Liftgate</item>
+        <item name="RURU">Rear Unload – Tanker Only</item>
+        <item name="SCSC">Side Curtains</item>
+        <item name="SFSF">Sloped Flatbed</item>
+        <item name="SUSU">Side Unload</item>
+        <item name="UHUH">Unload – Hopper Bottom</item>
+        <item name="UWUW">Unload – Walking Floor</item>
+        <item name="3A3A">Chassis Type (Tri-Axle)</item>
+    </string-array>
+
+</resources>

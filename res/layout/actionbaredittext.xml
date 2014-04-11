@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <EditText
+        android:id="@+id/edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:hint="@string/textentryhint"
+        android:minWidth="100dp"
+        android:scrollHorizontally="true" >
+    </EditText>
+
+    <Button
+        android:id="@+id/deletetext"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignRight="@id/edittext"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="2dp"
+        android:background="@drawable/delete"
+        android:onClick="clickHandler" />
+
+</RelativeLayout>

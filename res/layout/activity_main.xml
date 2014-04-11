@@ -1,0 +1,59 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/linearlayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#ccc"
+            android:orientation="horizontal" >
+
+            <fragment
+                android:id="@+id/frag_master"
+                android:name="com.dispatch_x12.LayOutOne"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout02"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#eee"
+            android:orientation="vertical" >
+
+            <fragment
+                android:id="@+id/frag_detail"
+                android:name="com.dispatch_x12.LayOutTwo"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- The navigation drawer -->
+    <!-- should not be larger than 320 to show content -->
+
+    <fragment
+        android:id="@+id/left_drawer"
+        android:name="com.dispatch_x12.LayOutLeftDrawer"
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
+
+    <fragment
+        android:id="@+id/right_drawer"
+        android:name="com.dispatch_x12.LayOutRightDrawer"
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end" />
+
+</android.support.v4.widget.DrawerLayout>

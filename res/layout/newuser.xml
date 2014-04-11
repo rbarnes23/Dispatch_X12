@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/newuser"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="5dip" >
+
+    <TextView
+        android:id="@+id/tv_emailaddress"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="9dip"
+        android:layout_marginTop="20dip"
+        android:text="@string/emailaddress"
+        android:textSize="8pt" />
+
+    <EditText
+        android:id="@+id/et_emailaddress"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_emailaddress"
+        android:layout_marginBottom="5dip"
+        android:layout_toRightOf="@id/tv_emailaddress"
+        android:background="@android:drawable/editbox_background"
+        android:hint="@string/emailaddress" />
+
+    <TextView
+        android:id="@+id/tv_pw"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="9dip"
+        android:layout_marginTop="20dip"
+        android:layout_below="@id/tv_emailaddress"
+        android:text="@string/password"
+        android:textSize="8pt" />
+
+    <EditText
+        android:id="@+id/et_pw"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_pw"
+        android:layout_below="@id/et_emailaddress"
+        android:layout_toRightOf="@id/tv_pw"
+        android:background="@android:drawable/editbox_background"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/tv_pw2"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="9dip"
+        android:layout_marginTop="20dip"
+        android:layout_below="@id/tv_pw"
+        android:text="@string/password"
+        android:textSize="8pt" />
+
+    <EditText
+        android:id="@+id/et_pw2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_pw2"
+        android:layout_below="@id/et_pw"
+        android:layout_toRightOf="@id/tv_pw2"
+        android:background="@android:drawable/editbox_background"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/tv_fname"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="9dip"
+        android:layout_marginTop="20dip"
+        android:layout_below="@id/tv_pw2"
+        android:text="@string/firstname"
+        android:textSize="8pt" />
+
+    <EditText
+        android:id="@+id/et_fname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_fname"
+        android:layout_below="@id/et_pw2"
+        android:layout_toRightOf="@id/tv_fname"
+        android:background="@android:drawable/editbox_background"
+        android:hint="@string/firstname" />
+
+    <TextView
+        android:id="@+id/tv_lname"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="9dip"
+        android:layout_marginTop="20dip"
+        android:layout_below="@id/tv_fname"
+        android:text="@string/lastname"
+        android:textSize="8pt" />
+
+    <EditText
+        android:id="@+id/et_lname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_lname"
+        android:layout_below="@id/et_fname"
+        android:layout_toRightOf="@id/tv_lname"
+        android:background="@android:drawable/editbox_background"
+        android:hint="@string/lastname" />
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tv_lname"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="9dip"
+        android:layout_marginTop="15dip"
+        android:text="@string/newusermessage"
+        android:textSize="7pt" />
+
+    <LinearLayout
+        android:id="@+id/buttonbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:padding="5sp"
+        android:visibility="visible" >
+
+        <Button
+            android:id="@+id/addmember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:onClick="ClickHandler"
+            android:text="@string/register"
+            android:textColor="@color/blue"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/cancelmember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:onClick="ClickHandler"
+            android:text="@string/cancel"
+            android:textColor="@color/blue"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+</RelativeLayout>

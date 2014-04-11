@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/changepasslayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="5dip">
+    <TextView
+        android:id="@+id/tv_passhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:textColor="@color/blue"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="9dip"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="10dip"
+        android:text="@string/changepasswordtitle"/>
+    
+     <TextView
+        android:id="@+id/tv_pw1c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:textColor="@color/blue"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tv_passhead"
+        android:layout_marginRight="9dip"
+        android:layout_marginTop="5dip"
+        android:layout_marginLeft="10dip"
+        android:text="@string/password"/>
+    <EditText
+        android:id="@+id/et_pw1c"
+        android:layout_width="150dip"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:layout_toRightOf="@id/tv_pw1c"
+        android:layout_alignTop="@id/tv_pw1c"
+        android:layout_marginLeft="17dip"
+        android:inputType="textPassword"        />
+     <TextView
+        android:id="@+id/tv_pw2c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:textColor="@color/blue"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tv_pw1c"
+        android:layout_marginRight="9dip"
+        android:layout_marginTop="5dip"
+        android:layout_marginLeft="10dip"
+        android:text="@string/password"/>
+    <EditText
+        android:id="@+id/et_pw2c"
+        android:layout_width="150dip"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:layout_toRightOf="@id/tv_pw2c"
+        android:layout_alignTop="@id/tv_pw2c"
+        android:layout_below="@id/et_pw1c"
+        android:layout_marginLeft="17dip"
+        android:inputType="textPassword"        />
+    
+
+     <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textSize="7pt"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tv_pw2c"
+        android:layout_marginRight="9dip"
+        android:layout_marginTop="15dip"
+        android:layout_marginLeft="15dip"
+        android:textColor="@color/red"
+        android:text="@string/changepasswordmessage"/>
+
+    <LinearLayout
+        android:id="@+id/buttonbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:padding="5sp"
+        android:visibility="visible" >
+
+        <Button
+            android:id="@+id/changepassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:onClick="ClickHandler"
+            android:text="@string/changepasswordtitle"
+            android:textColor="@color/blue"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/cancelpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:onClick="ClickHandler"
+            android:text="@string/cancel"
+            android:textColor="@color/blue"
+            android:textSize="22sp" />
+    </LinearLayout>
+     
+</RelativeLayout>

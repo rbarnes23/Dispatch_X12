@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customerMaster"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="48dp"
+    android:layout_marginTop="8dp"
+    android:background="@color/white"
+    android:descendantFocusability="afterDescendants" >
+
+    <TextView
+        android:id="@+id/companyNameHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:padding="16dp"
+        android:text="Company Name"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/companyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/companyNameHeading"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/companyNameHeading"
+        android:enabled="true"
+        android:hint="Enter Company Name"
+        android:imeOptions="actionNext"
+        android:inputType="textCapWords"
+        android:nextFocusForward="@+id/companyTypeSpinner"
+        android:textColor="@color/blue"
+        android:textDirection="locale"
+        android:textSize="@dimen/text_size" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/companyTypeHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/companyNameHeading"
+        android:layout_marginLeft="128dp"
+        android:layout_toRightOf="@+id/companyName"
+        android:text="Type"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <Spinner
+        android:id="@+id/companyTypeSpinner"
+        android:layout_width="@dimen/dropdown_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/companyNameHeading"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/companyTypeHeading"
+        android:entries="@array/companyType"
+        android:nextFocusForward="@+id/isaQualifierTypeSpinner"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="visible" />
+
+    <!-- ISA Information -->
+
+    <TextView
+        android:id="@+id/isaQualifierHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/companyNameHeading"
+        android:layout_below="@+id/companyNameHeading"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="ISA Qualifier"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <Spinner
+        android:id="@+id/isaQualifierTypeSpinner"
+        android:layout_width="@dimen/dropdown_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/isaQualifierHeading"
+        android:layout_alignLeft="@+id/companyName"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/isaQualifierHeading"
+        android:entries="@array/isaQualifierID"
+        android:nextFocusForward="@+id/isaID"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/isaIdHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/isaQualifierHeading"
+        android:layout_alignLeft="@+id/companyTypeHeading"
+        android:layout_toRightOf="@+id/isaQualifierTypeSpinner"
+        android:text="ISA Id"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/isaID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/isaQualifierHeading"
+        android:layout_alignLeft="@+id/companyTypeSpinner"
+        android:layout_marginBottom="16dp"
+        android:layout_toRightOf="@+id/isaIdHeading"
+        android:enabled="true"
+        android:hint="Enter ISA Id"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters"
+        android:nextFocusForward="@+id/isaUsageIndicatorSpinner"
+        android:textColor="@color/blue"
+        android:textDirection="locale"
+        android:textSize="@dimen/text_size" />
+
+    <TextView
+        android:id="@+id/isaUsageIndicatorHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/isaQualifierHeading"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/isaID"
+        android:text="ISA Usage"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <Spinner
+        android:id="@+id/isaUsageIndicatorSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/isaQualifierHeading"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/isaUsageIndicatorHeading"
+        android:entries="@array/isaUsageIndicator"
+        android:nextFocusForward="@+id/scac"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="visible" />
+
+    <!-- Other Header Info SCAC,DUNS,ICC -->
+
+    <TextView
+        android:id="@+id/scacHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/companyNameHeading"
+        android:layout_below="@+id/isaQualifierHeading"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="SCAC"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/scac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/scacHeading"
+        android:layout_alignLeft="@+id/companyName"
+        android:layout_marginBottom="16dp"
+        android:layout_toRightOf="@+id/scacHeading"
+        android:enabled="true"
+        android:hint="Enter SCAC Code"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters"
+        android:nextFocusForward="@+id/duns"
+        android:textColor="@color/blue"
+        android:textDirection="locale"
+        android:textSize="@dimen/text_size" />
+
+    <TextView
+        android:id="@+id/dunsHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/scacHeading"
+        android:layout_alignLeft="@+id/companyTypeHeading"
+        android:layout_toRightOf="@+id/scac"
+        android:text="DUNS"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/duns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/scacHeading"
+        android:layout_alignLeft="@+id/companyTypeSpinner"
+        android:layout_toRightOf="@+id/dunsHeading"
+        android:enabled="true"
+        android:hint="Enter DUNS Number"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters"
+        android:nextFocusForward="@+id/icc"
+        android:textColor="@color/blue"
+        android:textDirection="locale"
+        android:textSize="@dimen/text_size" />
+
+    <TextView
+        android:id="@+id/iccHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/companyNameHeading"
+        android:layout_below="@+id/scacHeading"
+        android:layout_marginLeft="16dp"
+        android:text="ICC No"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/icc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/iccHeading"
+        android:layout_alignLeft="@+id/companyName"
+        android:layout_toRightOf="@+id/iccHeading"
+        android:enabled="true"
+        android:hint="Enter ICC Number"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters"
+        android:nextFocusForward="@+id/dot"
+        android:padding="8dp"
+        android:textColor="@color/blue"
+        android:textDirection="locale"
+        android:textSize="@dimen/text_size" />
+
+    <TextView
+        android:id="@+id/dotHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/iccHeading"
+        android:layout_alignLeft="@+id/companyTypeHeading"
+        android:layout_toRightOf="@+id/icc"
+        android:text="DOT No"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/iccHeading"
+        android:layout_alignLeft="@+id/companyTypeSpinner"
+        android:layout_toRightOf="@+id/dotHeading"
+        android:enabled="true"
+        android:hint="Enter DOT Number"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters"
+        android:padding="8dp"
+        android:textColor="@color/blue"
+        android:textDirection="locale"
+        android:textSize="@dimen/text_size" />
+
+    <TextView
+        android:id="@+id/blankSpacer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/companyNameHeading"
+        android:layout_below="@+id/iccHeading"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="16dp"
+        android:text=""
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size" />
+
+</RelativeLayout>

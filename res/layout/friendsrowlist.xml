@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/friends_header_row_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="6dip"
+    android:paddingTop="4dip" >
+
+    <TextView
+        android:id="@+id/fullname"
+        android:layout_width="120dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:paddingRight="2dip"
+        android:text="@string/fullname"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="visible" >
+    </TextView>
+    <TextView
+        android:id="@+id/categoryname"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:paddingRight="2dip"
+        android:paddingBottom="10dip"
+        android:text="@string/info"
+        
+        android:textColor="@color/blue"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:visibility="visible" >
+    </TextView>
+    
+    <TextView
+        android:id="@+id/sortnumber"
+        android:layout_width="10dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:paddingRight="2dip"
+        android:text="@string/info_blank"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/positionid"
+        android:layout_width="10dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:paddingRight="2dip"
+        android:text="@string/info_blank"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone" >
+    </TextView>
+
+    <ImageView
+        android:id="@+id/showactive"
+        android:contentDescription="@string/info_blank"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingRight="1dip"
+        android:layout_gravity="right"
+        android:src="@android:drawable/checkbox_on_background" >
+    </ImageView>
+    <TextView
+        android:id="@+id/loggedin"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right|bottom"
+        android:paddingRight="2dip"
+        android:paddingBottom="0dip"
+        android:text="@string/info"        
+        android:textColor="@color/blue"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:visibility="visible" >
+        android:visibility="gone" >
+    </TextView>
+    
+    <ImageView
+        android:id="@+id/showlogin"
+        android:contentDescription="@string/info_blank"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingRight="1dip"
+        android:layout_gravity="right"
+        android:src="@drawable/online"
+         >
+    </ImageView>
+    
+</LinearLayout>

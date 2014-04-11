@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/message_header_row_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:orientation="horizontal"
+    android:paddingBottom="6dip"
+    android:paddingTop="4dip" >
+
+    <TextView
+        android:id="@+id/fullname"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+		android:layout_alignParentLeft="true"
+        android:gravity="left"
+        android:paddingRight="2dip"
+        android:text=""
+        android:textColor="@color/blue"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="visible" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fullname"
+        android:gravity="left"
+        android:paddingRight="2dip"
+        android:text="@string/messages"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        android:visibility="visible" >
+    </TextView>
+
+    <!-- android:checkMark="?android:attr/listChoiceIndicatorMultiple" -->
+
+    <CheckBox
+        android:id="@+id/membercheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:button="@drawable/checkboxselector"
+        android:checked="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingBottom="2dip"
+        android:paddingRight="2dip"
+        android:text=""
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:onClick="ClickHandler"
+        android:visibility="visible" />
+
+</RelativeLayout>

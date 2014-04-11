@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<TextView android:id="@+id/methodOfPayment"
+		android:layout_width="@dimen/methodOfPayment_size" android:layout_height="wrap_content"
+		android:layout_alignParentRight="true" android:layout_below="@+id/status"
+		android:layout_marginLeft="5dp" android:layout_marginTop="10dp"
+		android:textColor="@color/blue" android:textSize="@dimen/text_size_small" />
+
+	<TextView android:id="@+id/billTo" android:layout_width="@dimen/billToLabel_size"
+		android:layout_height="wrap_content" android:layout_below="@+id/status"
+		android:layout_marginTop="10dp" android:layout_toLeftOf="@+id/methodOfPayment"
+		android:text="@string/billTo" android:textColor="@color/blue"
+		android:textSize="@dimen/text_size" />
+
+	<TextView android:id="@+id/billToName" android:layout_width="@dimen/billTo_size"
+		android:layout_height="wrap_content" android:layout_alignParentRight="true"
+		android:layout_below="@+id/billTo" android:layout_gravity="left|center_vertical"
+		android:textColor="@color/blue" android:textSize="@dimen/text_size"
+		android:visibility="visible" />
+
+	<TextView android:id="@+id/billToAddress1"
+		android:layout_width="@dimen/billTo_size" android:layout_height="wrap_content"
+		android:layout_alignParentRight="true" android:layout_below="@+id/billToName"
+		android:layout_gravity="left|center_vertical" android:textColor="@color/blue"
+		android:textSize="@dimen/text_size" android:visibility="visible" />
+
+	<TextView android:id="@+id/billToAddress2"
+		android:layout_width="@dimen/billTo_size" android:layout_height="wrap_content"
+		android:layout_alignParentRight="true" android:layout_below="@+id/billToAddress1"
+		android:layout_gravity="left|center_vertical" android:textColor="@color/blue"
+		android:textSize="@dimen/text_size" android:visibility="gone" />
+
+	<TextView android:id="@+id/billToCity" android:layout_width="145sp"
+		android:layout_height="wrap_content" android:layout_below="@+id/billToAddress2"
+		android:layout_gravity="left|center_vertical"
+		android:layout_marginRight="5sp" android:layout_toLeftOf="@+id/billToState"
+		android:textColor="@color/blue" android:textSize="@dimen/text_size" />
+
+	<TextView android:id="@+id/billToState" android:layout_width="25sp"
+		android:layout_height="wrap_content" android:layout_below="@+id/billToAddress2"
+		android:layout_marginRight="5sp" android:layout_toLeftOf="@+id/billToPostalCode"
+		android:textColor="@color/blue" android:textSize="@dimen/text_size" />
+
+	<TextView android:id="@+id/billToPostalCode"
+		android:layout_width="70sp" android:layout_height="wrap_content"
+		android:layout_alignParentRight="true" android:layout_below="@+id/billToAddress2"
+		android:textColor="@color/blue" android:textSize="@dimen/text_size" />
+
+</merge>

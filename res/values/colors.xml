@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green">#00CD00</color>
+    <color name="blue">#151B8D</color>
+    <color name="red">#FF0000</color>
+    <color name="skyblue">#6698FF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#424242</color>
+    <color name="image_border_start">#40990000</color>
+    <color name="image_border_end">#FF660000</color>
+    <color name="image_border_center">#FFFF3333</color>
+    <color name="snow">#eee9e9</color>
+</resources>
