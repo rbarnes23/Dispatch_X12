@@ -2,6 +2,9 @@ package com.dispatch_x12;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.osmdroid.views.MapView;
@@ -94,6 +97,34 @@ public class MainActivity extends CustomFragmentActivity {
 				} else if (msg.what == Constant.PAYDRIVER) {
 						sendDataToBottomDrawer(msg);
 					return;
+				} else if (msg.what == Constant.VEHICLE) {
+					Bundle bundle  = new Bundle(msg.getData());
+					try {
+						JSONObject jReturn = new JSONObject(bundle.getString("message"));
+						
+						List list = new ArrayList();
+						list.add((String) jReturn.get("message"));
+						sendDataToRightDrawer(Constant.VEHICLE,(ArrayList<HashMap<String, String>>) list);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}					
+					
+				return;
+				} else if (msg.what == Constant.COMPANY) {
+					Bundle bundle  = new Bundle(msg.getData());
+					try {
+						JSONObject jReturn = new JSONObject(bundle.getString("message"));
+						
+						List list = new ArrayList();
+						list.add((String) jReturn.get("message"));
+						sendDataToRightDrawer(Constant.COMPANY,(ArrayList<HashMap<String, String>>) list);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}					
+				return;
+	
 				} else if (msg.what == Constant.SESSIONS) {
 					UpdateUserInterface updateUserInterface = new UpdateUserInterface();
 					updateUserInterface.execute((Bundle) msg.getData());

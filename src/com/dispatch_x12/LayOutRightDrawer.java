@@ -3,6 +3,7 @@ package com.dispatch_x12;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 
 import com.edilibrary.Create210;
@@ -40,6 +41,7 @@ public class LayOutRightDrawer extends Fragment {
 	private ArrayList<HashMap<String, String>> loadList = new ArrayList<HashMap<String, String>>();
 	private ArrayList<HashMap<String, String>> employeeList = new ArrayList<HashMap<String, String>>();
 	private ArrayList<HashMap<String, String>> vehicleList = new ArrayList<HashMap<String, String>>();
+	private ArrayList<HashMap<String, String>> companyList = new ArrayList<HashMap<String, String>>();
 	private ArrayList<HashMap<String, String>> mMessageType = new ArrayList<HashMap<String, String>>();
 
 	private LoadListAdapter loadListAdapter;
@@ -98,7 +100,7 @@ public class LayOutRightDrawer extends Fragment {
 		super.onAttach(activity);
 	}
 
-	void setMessage(int type,ArrayList<HashMap<String, String>> msg) {
+	void setMessage(int type, ArrayList<HashMap<String, String>> msg) {
 		/*
 		 * Dont use notifydatasetchanged because we can only have the original
 		 * list size onceI also want to change the adapter based on what i want
@@ -107,19 +109,30 @@ public class LayOutRightDrawer extends Fragment {
 		Spinner spinnerStatus = (Spinner) root.findViewById(R.id.spinnerStatus);
 		LoadFilterAdapter loadFilterAdapter = new LoadFilterAdapter(mContext,
 				mMessageType);
-		if (type==Constant.LOAD){
-		mMessageType = loadFilterAdapter.addRows();
+		if (type == Constant.LOAD) {
+			mMessageType = loadFilterAdapter.addRows();
 
-		spinnerStatus.setAdapter(loadFilterAdapter);
+			spinnerStatus.setAdapter(loadFilterAdapter);
 
-		loadList.clear();
-		loadList.addAll(msg);
-		loadListAdapter = new LoadListAdapter(mContext, R.layout.loadsrowlist,
-				loadList);
-		mList.setAdapter(loadListAdapter);
-		String className = mList.getAdapter().getClass().getSimpleName();
-		setSpinnerFilter(className);
+			loadList.clear();
+			loadList.addAll(msg);
+			loadListAdapter = new LoadListAdapter(mContext,
+					R.layout.loadsrowlist, loadList);
+			mList.setAdapter(loadListAdapter);
+			String className = mList.getAdapter().getClass().getSimpleName();
+			setSpinnerFilter(className);
+
+		} else if (type == Constant.COMPANY) {
+			companyList.clear();
+			companyList.addAll(msg);
+			String test = msg.toString();
+
+		} else if (type == Constant.VEHICLE) {
+			vehicleList.clear();
+			vehicleList.addAll(msg);
+			String test = msg.toString();
 		}
+
 	}
 
 	private boolean sendUpdateMessage(Message msgToActivity) {

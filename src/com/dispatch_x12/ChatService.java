@@ -331,6 +331,10 @@ public class ChatService extends Service implements Runnable {
 							msgToActivity.what = Constant.STOPINFO;
 						} else if (type.contentEquals("getsessions")) {
 							msgToActivity.what = Constant.SESSIONS;
+						} else if (type.contentEquals("vehicle")) {
+							msgToActivity.what = Constant.VEHICLE;
+						} else if (type.contentEquals("company")) {
+							msgToActivity.what = Constant.COMPANY;
 						} else {
 							msgToActivity.what = Constant.MESSAGE;
 						}
