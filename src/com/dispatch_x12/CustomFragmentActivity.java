@@ -237,9 +237,9 @@ public abstract class CustomFragmentActivity extends FragmentActivity implements
 			Fragment currentFragment = fm.findFragmentById(R.id.frag_master);
 
 			String className = currentFragment.getClass().getName();
-			if (className.contentEquals("com.dispatch_x12.CustomerEntry")) {
+			if (className.contentEquals("com.dispatch_x12.CompanyEntry")) {
 				JSONObject msg = new JSONObject();
-				sendDataToCustomerEntry(msg);
+				sendDataToCompanyEntry(msg);
 			}
 			if (className.contentEquals("com.dispatch_x12.UserEntry")) {
 				JSONObject msg = new JSONObject();
@@ -329,8 +329,8 @@ public abstract class CustomFragmentActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void sendDataToCustomerEntry(JSONObject msg) {
-		CustomerEntry Obj = (CustomerEntry) getSupportFragmentManager()
+	public void sendDataToCompanyEntry(JSONObject msg) {
+		CompanyEntry Obj = (CompanyEntry) getSupportFragmentManager()
 				.findFragmentById(R.id.frag_master);
 		Obj.setMessage(msg);
 

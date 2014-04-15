@@ -11,16 +11,23 @@ public class Constant
 {
     public static final int MEMBERID = 1;
     public static final int CONNECTED = 2;
-    public static final int MESSAGE = 3;
-    public static final int COMPANY = 4;
-    public static final int VEHICLE = 5;
-    public static final int EMPLOYEE = 6;
+    public static final int MESSAGEMENU = 3;
+    public static final int COMPANYMENU = 4;
+    public static final int VEHICLEMENU = 5;
+    public static final int EMPLOYEEMENU = 6;
+    public static final int RATESMENU = 7;
+    public static final int COMPANYDATA = 8;
+    public static final int VEHICLEDATA = 9;
+    public static final int EMPLOYEEDATA = 10;
+    public static final int RATESDATA = 11;
+    public static final int MESSAGE = 12;
+    
     public static final int X204 = 204;
     public static final int X990 = 990;
     public static final int X997 = 997;
     public static final int X210 = 210;
     public static final int STOPINFO = 64;
-    public static final int LOAD = 65;
+    public static final int LOADDATA = 65;
     public static final int FINDMEMBER = 67;
     public static final int SESSIONS = 68;
     public static final int PAYDRIVER = 69;

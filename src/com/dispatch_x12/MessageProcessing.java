@@ -26,7 +26,7 @@ import android.os.AsyncTask;
 public class MessageProcessing {
 	private static String mTo = null;
 	private static boolean mLoggedin;
-	private static ArrayList<HashMap<String, String>> jsonMessagelist = new ArrayList<HashMap<String, String>>();
+	private static ArrayList<HashMap<String, String>> arrayMessageList = new ArrayList<HashMap<String, String>>();
 	// private static ArrayList<HashMap<String, String>> ediList = new
 	// ArrayList<HashMap<String, String>>();
 	private static List<Integer> sMemberIds = new ArrayList<Integer>();
@@ -249,8 +249,8 @@ public class MessageProcessing {
 					messageMap.put("_id", mId);
 					messageMap.put("rates", rates);
 					// Add to the top of the list as messages come in
-					// jsonMessagelist.add(0, messageMap);
-					jsonMessagelist.add(messageMap);
+					// arrayMessageList.add(0, messageMap);
+					arrayMessageList.add(messageMap);
 					// messageAdapter.notifyDataSetChanged();
 
 				}
@@ -264,12 +264,12 @@ public class MessageProcessing {
 	}
 
 	public static ArrayList<HashMap<String, String>> getMessageList() {
-		return jsonMessagelist;
+		return arrayMessageList;
 	}
 
 	public static HashMap<String, String> getLastMessage() {
-		int lastindex = jsonMessagelist.size();
-		return jsonMessagelist.get(lastindex);
+		int lastindex = arrayMessageList.size();
+		return arrayMessageList.get(lastindex);
 	}
 
 	public static JSONArray getStops(JSONObject jResponse) {
@@ -631,7 +631,7 @@ public class MessageProcessing {
 		JSONObject jResult;
 		JSONArray stops;
 		String resultString = null;
-		ArrayList<HashMap<String, String>> jsonStopList = new ArrayList<HashMap<String, String>>();
+		ArrayList<HashMap<String, String>> arrayStopList = new ArrayList<HashMap<String, String>>();
 
 		try {
 			jResult = new JSONObject(passedMessage);
@@ -700,10 +700,10 @@ public class MessageProcessing {
 
 			}
 
-			jsonStopList.add(i, stopMap);
+			arrayStopList.add(i, stopMap);
 		}
 
-		return jsonStopList;
+		return arrayStopList;
 	}
 
 	// public static Message createStops2(String passedMessage, String _id,
@@ -711,7 +711,7 @@ public class MessageProcessing {
 	// JSONObject jResult;
 	// JSONArray stops;
 	// String resultString = null;
-	// ArrayList<HashMap<String, String>> jsonStopList = new
+	// ArrayList<HashMap<String, String>> arrayStopList = new
 	// ArrayList<HashMap<String, String>>();
 	//
 	// try {
@@ -773,13 +773,13 @@ public class MessageProcessing {
 	//
 	// }
 	//
-	// jsonStopList.add(i, stopMap);
+	// arrayStopList.add(i, stopMap);
 	// }
 	// Message msg = MainActivity.mUiHandler.obtainMessage();
 	//
 	// Bundle bundle = new Bundle();
 	// bundle.putParcelableArrayList("message",
-	// (ArrayList<? extends Parcelable>) jsonStopList);
+	// (ArrayList<? extends Parcelable>) arrayStopList);
 	// msg.setData(bundle);
 	// return msg;
 	// }

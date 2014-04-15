@@ -13,7 +13,7 @@ public interface DataToSendListener {
 	public void sendDataToRightDrawer(int type,ArrayList<HashMap<String, String>> msg);
     public void sendDataToTopDrawer(JSONObject msg);
     public void sendDataToLeftDrawer(String msg);
-    public void sendDataToCustomerEntry(JSONObject msg);
+    public void sendDataToCompanyEntry(JSONObject msg);
     public void sendDataToUserEntry(JSONObject msg);
     public void sendDataToVehicleEntry(JSONObject msg);
 

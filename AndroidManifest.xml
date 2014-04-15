@@ -46,7 +46,7 @@
             android:configChanges="keyboardHidden|orientation" >
         </activity>
         <activity
-            android:name="com.dispatch_x12.CustomerEntry"
+            android:name="com.dispatch_x12.CompanyEntry"
             android:windowSoftInputMode="adjustPan"
             android:configChanges="keyboardHidden|orientation" >
         </activity>

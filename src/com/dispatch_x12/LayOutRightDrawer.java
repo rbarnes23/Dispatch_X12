@@ -38,13 +38,15 @@ public class LayOutRightDrawer extends Fragment {
 	ViewGroup root;
 	private static ListView mList;// Going to use this list for multiple
 									// purposes
-	private ArrayList<HashMap<String, String>> loadList = new ArrayList<HashMap<String, String>>();
-	private ArrayList<HashMap<String, String>> employeeList = new ArrayList<HashMap<String, String>>();
-	private ArrayList<HashMap<String, String>> vehicleList = new ArrayList<HashMap<String, String>>();
-	private ArrayList<HashMap<String, String>> companyList = new ArrayList<HashMap<String, String>>();
+	private ArrayList<HashMap<String, String>> mLoadList = new ArrayList<HashMap<String, String>>();
+	private ArrayList<HashMap<String, String>> mEmployeeList = new ArrayList<HashMap<String, String>>();
+	private ArrayList<HashMap<String, String>> mVehicleList = new ArrayList<HashMap<String, String>>();
+	private ArrayList<HashMap<String, String>> mCompanyList = new ArrayList<HashMap<String, String>>();
 	private ArrayList<HashMap<String, String>> mMessageType = new ArrayList<HashMap<String, String>>();
 
-	private LoadListAdapter loadListAdapter;
+	private LoadListAdapter mLoadListAdapter;
+	private CompanyListAdapter mCompanyListAdapter;
+	private VehicleListAdapter mVehicleListAdapter;
 	private Context mContext;
 
 	@Override
@@ -77,14 +79,26 @@ public class LayOutRightDrawer extends Fragment {
 				if (className.contentEquals("LoadListAdapter")) {
 					String type = mMessageType.get(position).get("type");
 
-					if (loadList.size() > 0 && loadList != null) {
+					if (mLoadList.size() > 0 && mLoadList != null) {
 						if (type.contentEquals("AI")) {
-							loadListAdapter.getFilter().filter(null);
+							mLoadListAdapter.getFilter().filter(null);
 						} else {
-							loadListAdapter.getFilter().filter(type);
+							mLoadListAdapter.getFilter().filter(type);
 						}
 					}
+				}else
+				if (className.contentEquals("CompanyListAdapter")) {
+					String type = mMessageType.get(position).get("type");
+
+					if (mCompanyList.size() > 0 && mCompanyList != null) {
+						//if (type.contentEquals("AI")) {
+							mCompanyListAdapter.getFilter().filter(null);
+						//} else {
+						//	companyListAdapter.getFilter().filter(type);
+						//}
+					}
 				}
+
 			}
 
 			@Override
@@ -109,30 +123,49 @@ public class LayOutRightDrawer extends Fragment {
 		Spinner spinnerStatus = (Spinner) root.findViewById(R.id.spinnerStatus);
 		LoadFilterAdapter loadFilterAdapter = new LoadFilterAdapter(mContext,
 				mMessageType);
-		if (type == Constant.LOAD) {
+		if (type == Constant.LOADDATA) {
 			mMessageType = loadFilterAdapter.addRows();
 
 			spinnerStatus.setAdapter(loadFilterAdapter);
 
-			loadList.clear();
-			loadList.addAll(msg);
-			loadListAdapter = new LoadListAdapter(mContext,
-					R.layout.loadsrowlist, loadList);
-			mList.setAdapter(loadListAdapter);
+			mLoadList.clear();
+			mLoadList.addAll(msg);
+			mLoadListAdapter = new LoadListAdapter(mContext,
+					R.layout.loadsrowlist, mLoadList);
+			mList.setAdapter(mLoadListAdapter);
+			String className = mList.getAdapter().getClass().getSimpleName();
+			setSpinnerFilter(className);
+		} else if (type == Constant.COMPANYDATA) {
+			mMessageType = loadFilterAdapter.addRows();
+
+			spinnerStatus.setAdapter(loadFilterAdapter);
+			mCompanyList.clear();
+
+			mCompanyList.addAll(msg);
+			mCompanyListAdapter = new CompanyListAdapter(mContext,
+					R.layout.loadsrowlist, mCompanyList);
+			mList.setAdapter(mCompanyListAdapter);
 			String className = mList.getAdapter().getClass().getSimpleName();
 			setSpinnerFilter(className);
 
-		} else if (type == Constant.COMPANY) {
-			companyList.clear();
-			companyList.addAll(msg);
-			String test = msg.toString();
+		} else if (type == Constant.VEHICLEDATA) {
+			mMessageType = loadFilterAdapter.addRows();
 
-		} else if (type == Constant.VEHICLE) {
-			vehicleList.clear();
-			vehicleList.addAll(msg);
+			spinnerStatus.setAdapter(loadFilterAdapter);
+
+			mVehicleList.clear();
+			mVehicleList.addAll(msg);
+			mVehicleListAdapter = new VehicleListAdapter(mContext,
+					R.layout.loadsrowlist, mVehicleList);
+			mList.setAdapter(mVehicleListAdapter);
+			String className = mList.getAdapter().getClass().getSimpleName();
+			setSpinnerFilter(className);
+
+		} else if (type == Constant.EMPLOYEEDATA) {
+			mEmployeeList.clear();
+			mEmployeeList.addAll(msg);
 			String test = msg.toString();
 		}
-
 	}
 
 	private boolean sendUpdateMessage(Message msgToActivity) {

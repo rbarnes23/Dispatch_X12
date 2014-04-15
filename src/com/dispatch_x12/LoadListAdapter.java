@@ -139,7 +139,7 @@ public class LoadListAdapter extends BaseAdapter
 
 			public void onClick(View v) {
 				Message msgToActivity = MainActivity.mUiHandler
-						.obtainMessage(Constant.LOAD);
+						.obtainMessage(Constant.LOADDATA);
 				msgToActivity.arg1 = 1;
 				Bundle bundle = new Bundle();
 				bundle.putString("message", loadInfo);

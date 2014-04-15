@@ -34,7 +34,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CustomerEntry extends ListFragment {
+public class CompanyEntry extends ListFragment {
 	ViewGroup root;
 	Context mContext;
 	private InputMethodManager imm;

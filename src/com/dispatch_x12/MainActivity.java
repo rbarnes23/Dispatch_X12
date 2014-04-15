@@ -40,15 +40,21 @@ import android.widget.Toast;
 @SuppressLint("NewApi")
 public class MainActivity extends CustomFragmentActivity {
 	public static Handler mUiHandler = null;
-	private ArrayList<HashMap<String, String>> jsonStopList = new ArrayList<HashMap<String, String>>();
-	// private MessageProcessing mMessageProcessing = new MessageProcessing();
-	private ArrayList<HashMap<String, String>> jsonLoadList = new ArrayList<HashMap<String, String>>();
+	private ArrayList<HashMap<String, String>> mStopList = new ArrayList<HashMap<String, String>>();
+	private ArrayList<HashMap<String, String>> mLoadList = new ArrayList<HashMap<String, String>>();
+	@SuppressWarnings("rawtypes")
+	private List mVehicleList;
+	@SuppressWarnings("rawtypes")
+	private List mCompanyList;
+	@SuppressWarnings("rawtypes")
+	private List mEmployeeList;
+	@SuppressWarnings("rawtypes")
+	private List mRatesList;
 	private boolean mFirst = true;
 	private boolean mLoaded = false;
 	private Bundle stopBundle;
 	private static Context sContext;
-//	private static ArrayList<HashMap<String, String>> mMemberFindList = new ArrayList<HashMap<String, String>>();
-	int mHeight=0;
+	private int mHeight;
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -58,7 +64,7 @@ public class MainActivity extends CustomFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		sContext=this.getApplicationContext();
+		sContext = this.getApplicationContext();
 		TextView companyName = (TextView) this.findViewById(R.id.companyName);
 		companyName.setText(AppSettings.getCompanyName());
 		Drawable b = writeOnCircle(getResources().getText(R.string.app_name)
@@ -72,76 +78,193 @@ public class MainActivity extends CustomFragmentActivity {
 			public void handleMessage(Message msg) {
 				if (msg.getData() == null) {
 					return;
-				} else if (msg.what == 0) {
-					return;
-				} else if (msg.what == Constant.STOPINFO) {
+				}
+				Bundle bundle;
+				UpdateUserInterface updateUserInterface;
+				FragmentManager fm = getSupportFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+				Fragment currentFragment = fm
+						.findFragmentById(R.id.right_drawer);
+				LinearLayout detailLayout = (LinearLayout) findViewById(R.id.linearlayout02);
+				if(mFirst){
+					mHeight=detailLayout.getLayoutParams().height;
+				}
+				closeAllDrawers();
+
+				switch (msg.what) {
+				case 0:
+					// return;
+					break;
+				case Constant.COMPANYMENU:
+					// Handle Trading Partners
+					currentFragment = fm.findFragmentById(R.id.frag_master);
+					CompanyEntry companyEntry = new CompanyEntry();
+					// Preserve current Fragment contents so I can get it later
+					ft.addToBackStack(currentFragment.getTag());
+					ft.replace(R.id.frag_master, companyEntry);
+					ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+					ft.commit();
+					mMenu.findItem(R.id.save).setVisible(true);
+					setLayoutParams(detailLayout, 0);
+					sendDataToRightDrawer(Constant.COMPANYDATA,
+							(ArrayList<HashMap<String, String>>) mCompanyList);
+					break;
+				case Constant.VEHICLEMENU:
+					// Handle Vehicles
+					currentFragment = fm.findFragmentById(R.id.frag_master);
+					VehicleEntry vehicleEntry = new VehicleEntry();
+					// Preserve current Fragment contents so I can get it later
+					ft.addToBackStack(currentFragment.getTag());
+					ft.replace(R.id.frag_master, vehicleEntry);
+					ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+					ft.commit();
+					mMenu.findItem(R.id.save).setVisible(true);
+					// Make Full Screen
+					setLayoutParams(detailLayout, 0);
+					sendDataToRightDrawer(Constant.VEHICLEDATA,
+							(ArrayList<HashMap<String, String>>) mVehicleList);
+
+					break;
+				case Constant.EMPLOYEEMENU:
+					// Handle Employees
+					currentFragment = fm.findFragmentById(R.id.frag_master);
+					UserEntry userEntry = new UserEntry();
+					// Preserve current Fragment contents so I can get it later
+					ft.addToBackStack(currentFragment.getTag());
+					ft.replace(R.id.frag_master, userEntry);
+					ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+					ft.commit();
+					mMenu.findItem(R.id.save).setVisible(true);
+					// Make Full Screen
+					setLayoutParams(detailLayout, 0);
+					sendDataToRightDrawer(Constant.EMPLOYEEDATA,
+							(ArrayList<HashMap<String, String>>) mEmployeeList);
+
+					break;
+				case Constant.RATESMENU:
+					//Handles Rates
+					sendDataToRightDrawer(Constant.RATESDATA,
+							(ArrayList<HashMap<String, String>>) mRatesList);
+					break;
+				case Constant.STOPINFO:  //This handles signed receivers and os&d info
 					stopBundle = new Bundle();
 					stopBundle = msg.getData();
 
 					ViewGroup signatureGroup = (ViewGroup) findViewById(R.id.signaturebox);
 					signatureGroup.setVisibility(View.VISIBLE);
-					// setToast((String)stopBundle.get("_id"),
-					// Toast.LENGTH_SHORT);
-					return;
-				} else if (msg.what == Constant.FINDMEMBER) {
-					Bundle bundle  = new Bundle(msg.getData());
+					break;
+				case Constant.FINDMEMBER:
+					bundle = new Bundle(msg.getData());
 					try {
-						JSONObject jReturn = new JSONObject(bundle.getString("message"));
+						JSONObject jReturn = new JSONObject(
+								bundle.getString("message"));
 						sendDataToTopDrawer(jReturn);
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					//sendDataToTopDrawer();
-					return;
-				} else if (msg.what == Constant.PAYDRIVER) {
-						sendDataToBottomDrawer(msg);
-					return;
-				} else if (msg.what == Constant.VEHICLE) {
-					Bundle bundle  = new Bundle(msg.getData());
+					break;
+				case Constant.PAYDRIVER:
+					sendDataToBottomDrawer(msg);
+					break;
+				case Constant.EMPLOYEEDATA:
+					bundle = new Bundle(msg.getData());
 					try {
-						JSONObject jReturn = new JSONObject(bundle.getString("message"));
-						
-						List list = new ArrayList();
-						list.add((String) jReturn.get("message"));
-						sendDataToRightDrawer(Constant.VEHICLE,(ArrayList<HashMap<String, String>>) list);
+						JSONObject jReturn = new JSONObject(
+								bundle.getString("message"));
+						mEmployeeList = new ArrayList<HashMap<String, String>>();
+						mEmployeeList.add((String) jReturn.get("message"));
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}					
-					
-				return;
-				} else if (msg.what == Constant.COMPANY) {
-					Bundle bundle  = new Bundle(msg.getData());
+					}
+					break;
+				case Constant.RATESDATA:
+					bundle = new Bundle(msg.getData());
 					try {
-						JSONObject jReturn = new JSONObject(bundle.getString("message"));
-						
-						List list = new ArrayList();
-						list.add((String) jReturn.get("message"));
-						sendDataToRightDrawer(Constant.COMPANY,(ArrayList<HashMap<String, String>>) list);
+						JSONObject jReturn = new JSONObject(
+								bundle.getString("message"));
+
+						mRatesList = new ArrayList<HashMap<String, String>>();
+						mRatesList.add((String) jReturn.get("message"));
+
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}					
-				return;
-	
-				} else if (msg.what == Constant.SESSIONS) {
-					UpdateUserInterface updateUserInterface = new UpdateUserInterface();
-					updateUserInterface.execute((Bundle) msg.getData());
+					}
+					break;
 
-					return;
-				} else if (msg.what == Constant.LOAD) {
-					mLoaded=(msg.arg1==1)?true:false;
+				case Constant.VEHICLEDATA:
+					bundle = new Bundle(msg.getData());
+					try {
+						JSONObject jReturn = new JSONObject(
+								bundle.getString("message"));
+						JSONArray jMessage = new JSONArray(
+								jReturn.getString("message"));
+						int size = jMessage.length();
+						mVehicleList = new ArrayList<HashMap<String, String>>();
 
-					UpdateUserInterface updateUserInterface = new UpdateUserInterface();
+						for (int index = 0; index < size; index++) {
+							JSONObject jLine = new JSONObject(jMessage.get(
+									index).toString());
+							mVehicleList.add(jLine);
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+				case Constant.COMPANYDATA:
+					bundle = new Bundle(msg.getData());
+					try {
+						JSONObject jReturn = new JSONObject(
+								bundle.getString("message"));
+						JSONArray jMessage = new JSONArray(
+								jReturn.getString("message"));
+						int size = jMessage.length();
+						mCompanyList = new ArrayList<HashMap<String, String>>();
+
+						for (int index = 0; index < size; index++) {
+							JSONObject jLine = new JSONObject(jMessage.get(
+									index).toString());
+							mCompanyList.add(jLine);
+						}
+
+						// mCompanyList = new ArrayList<HashMap<String,
+						// String>>();
+						// mCompanyList.add((String) jReturn.get("message"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+				case Constant.SESSIONS:
+					updateUserInterface = new UpdateUserInterface();
 					updateUserInterface.execute((Bundle) msg.getData());
-					return;
-				} else if (msg.what == Constant.MESSAGE) {
-					//UpdateUserInterface updateUserInterface = new UpdateUserInterface();
-					//updateUserInterface.execute((Bundle) msg.getData());
-					return;
-				} else {
-					return;
+					break;
+				case Constant.LOADDATA:
+					mLoaded = (msg.arg1 == 1) ? true : false;
+
+					updateUserInterface = new UpdateUserInterface();
+					updateUserInterface.execute((Bundle) msg.getData());
+					break;
+				case Constant.MESSAGEMENU:
+					// Handle Messages
+					currentFragment = fm.findFragmentById(R.id.frag_master);
+					LayOutOne layoutOne = new LayOutOne();
+					// Preserve current Fragment contents so I can get it later
+					ft.addToBackStack(currentFragment.getTag());
+					ft.replace(R.id.frag_master, layoutOne);
+					ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+					ft.commit();
+					mMenu.findItem(R.id.save).setVisible(false);
+					// Make Full Screen
+					setLayoutParams(detailLayout, mHeight);
+					mLoadList=MessageProcessing.getMessageList();
+					sendDataToRightDrawer(Constant.LOADDATA,
+							(ArrayList<HashMap<String, String>>) mLoadList);
+
+					break;
 				}
 			}
 		};
@@ -156,8 +279,8 @@ public class MainActivity extends CustomFragmentActivity {
 
 		@Override
 		protected void onPreExecute() {
-			jsonStopList.clear();
-			jsonLoadList.clear();
+			mStopList.clear();
+			mLoadList.clear();
 			TextView messageView = new TextView(getApplicationContext());
 			messageView.setText(R.string.working);
 			mPd.setIcon(R.drawable.appicon);
@@ -183,32 +306,32 @@ public class MainActivity extends CustomFragmentActivity {
 			}
 			if (mFirst) {
 
-				jsonLoadList = MessageProcessing.getMessageList();
+				mLoadList = MessageProcessing.getMessageList();
 				mFirst = false;
 			} else {
-				jsonLoadList = MessageProcessing.getMessageList();
+				mLoadList = MessageProcessing.getMessageList();
 			}
 			// Send information to the fragments
-//			String msg = MessageProcessing.getSessions();
-//			sendDataToLeftDrawer(msg);
-			if(!mLoaded){
-			sendDataToRightDrawer(Constant.LOAD,jsonLoadList);
-			}else{
-			sendDataToTopDrawer(result);
-			Message stopMsg =Message.obtain();
-			stopMsg.what=Constant.STOPS;
-			Bundle bundle = new Bundle();
-			bundle.putSerializable("message",jsonStopList);
-			try {
-				bundle.putString("rates", result.getString("rates"));
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			// String msg = MessageProcessing.getSessions();
+			// sendDataToLeftDrawer(msg);
+			if (!mLoaded) {
+				sendDataToRightDrawer(Constant.LOADDATA, mLoadList);
+			} else {
+				sendDataToTopDrawer(result);
+				Message stopMsg = Message.obtain();
+				stopMsg.what = Constant.STOPS;
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("message", mStopList);
+				try {
+					bundle.putString("rates", result.getString("rates"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-			stopMsg.setData(bundle);
-			sendDataToBottomDrawer(stopMsg);
-}
+				stopMsg.setData(bundle);
+				sendDataToBottomDrawer(stopMsg);
+			}
 			closeAllDrawers();
 			mPd.dismiss();
 		}
@@ -225,11 +348,12 @@ public class MainActivity extends CustomFragmentActivity {
 				jResult = ediSupport.parseEdiStringtoJSON(message);
 				message = jResult.toString();
 				try {
-					//Added _id so I can reference the record later when need to update record
-					jResult.put("_id",_id );
-					jResult.put("rates",rates );
-					jsonStopList = MessageProcessing.createStops(message, _id,
-							getApplicationContext(),true);
+					// Added _id so I can reference the record later when need
+					// to update record
+					jResult.put("_id", _id);
+					jResult.put("rates", rates);
+					mStopList = MessageProcessing.createStops(message, _id,
+							getApplicationContext(), true);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -251,10 +375,11 @@ public class MainActivity extends CustomFragmentActivity {
 				if (returnMessage[1].contentEquals("204")) {
 					passedMessage = returnMessage[0];
 					jResult = new JSONObject(passedMessage);
-					//Added _id so I can reference the record later when need to update record
-					jResult.put("_id",_id );
-					jsonStopList = MessageProcessing.createStops(passedMessage,
-							_id, getApplicationContext(),true);
+					// Added _id so I can reference the record later when need
+					// to update record
+					jResult.put("_id", _id);
+					mStopList = MessageProcessing.createStops(passedMessage,
+							_id, getApplicationContext(), true);
 				}
 
 			} catch (JSONException e) {
@@ -267,17 +392,17 @@ public class MainActivity extends CustomFragmentActivity {
 
 	}
 
-//	// Clear the memberlist so another search can be done
-//	public static ArrayList<HashMap<String, String>> getMemberList() {
-//		return mMemberFindList;
-//	}
+	// // Clear the memberlist so another search can be done
+	// public static ArrayList<HashMap<String, String>> getMemberList() {
+	// return mMemberFindList;
+	// }
 
 	public void ClickHandler(View v) {
 		// setToast("POS: " + v.getId(), Toast.LENGTH_SHORT);
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		Fragment currentFragment = fm.findFragmentById(R.id.right_drawer);
-		DrawerLayout drawerLayout=(DrawerLayout) findViewById(R.id.drawer_layout);
+		DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		RelativeLayout expanderLayout = (RelativeLayout) findViewById(R.id.expander);
 		LayoutParams expanderParams = expanderLayout.getLayoutParams();
 		ViewGroup signatureGroup = (ViewGroup) findViewById(R.id.signaturebox);
@@ -314,7 +439,7 @@ public class MainActivity extends CustomFragmentActivity {
 			// messagearrayto send isn't there yet
 			fm.popBackStackImmediate(currentFragment.getTag(),
 					fm.POP_BACK_STACK_INCLUSIVE);
-			sendDataToRightDrawer(Constant.LOAD,jsonLoadList);
+			sendDataToRightDrawer(Constant.LOADDATA, mLoadList);
 			break;
 		case R.id.saveSignature:
 			// Save Signature for the stop
@@ -334,7 +459,7 @@ public class MainActivity extends CustomFragmentActivity {
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.commit();
 			mMenu.findItem(R.id.save).setVisible(true);
-			//Make Full Screen
+			// Make Full Screen
 			setLayoutParams(detailLayout, 0);
 			break;
 		case R.id.equipment:
@@ -347,7 +472,7 @@ public class MainActivity extends CustomFragmentActivity {
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.commit();
 			mMenu.findItem(R.id.save).setVisible(true);
-			//Make Full Screen
+			// Make Full Screen
 			setLayoutParams(detailLayout, 0);
 			break;
 		case R.id.rates:
@@ -359,18 +484,19 @@ public class MainActivity extends CustomFragmentActivity {
 		case R.id.tradingpartners:
 			// Handle Trading Partners
 			currentFragment = fm.findFragmentById(R.id.frag_master);
-			CustomerEntry customerEntry = new CustomerEntry();
+			CompanyEntry companyEntry = new CompanyEntry();
 			// Preserve current Fragment contents so I can get it later
 			ft.addToBackStack(currentFragment.getTag());
-			ft.replace(R.id.frag_master, customerEntry);
+			ft.replace(R.id.frag_master, companyEntry);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.commit();
 			mMenu.findItem(R.id.save).setVisible(true);
-			//Make Full Screen
-//			drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//			mHeight=drawerLayout.getBottom();
-			//LinearLayout detailLayout2 = (LinearLayout) findViewById(R.id.linearlayout02);
-			//setLayoutParams(detailLayout, 62);
+			// Make Full Screen
+			// drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+			// mHeight=drawerLayout.getBottom();
+			// LinearLayout detailLayout2 = (LinearLayout)
+			// findViewById(R.id.linearlayout02);
+			// setLayoutParams(detailLayout, 62);
 			setLayoutParams(detailLayout, 0);
 			break;
 		case R.id.settings:
@@ -388,8 +514,9 @@ public class MainActivity extends CustomFragmentActivity {
 			break;
 		}
 	}
+
 	public static void setToast(String text, int duration) {
-//		Context context = getApplicationContext();
+		// Context context = getApplicationContext();
 		Toast imageToast = new Toast(sContext);
 		LinearLayout toastLayout = new LinearLayout(sContext);
 
@@ -400,7 +527,7 @@ public class MainActivity extends CustomFragmentActivity {
 		toastLayout.addView(image);
 		TextView tv = new TextView(sContext);
 		tv.setTextColor(Color.BLUE);
-		//tv.setTextSize(sContext.getResources().getDimension(R.dimen.text_size_small));
+		// tv.setTextSize(sContext.getResources().getDimension(R.dimen.text_size_small));
 		tv.setTextSize(18);
 		tv.setTypeface(Typeface.DEFAULT);
 		tv.setBackgroundColor(Color.TRANSPARENT);
@@ -411,7 +538,5 @@ public class MainActivity extends CustomFragmentActivity {
 				: Toast.LENGTH_LONG);
 		imageToast.show();
 	}
-
-
 
 }

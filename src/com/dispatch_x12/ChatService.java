@@ -322,7 +322,7 @@ public class ChatService extends Service implements Runnable {
 						JSONObject jMessage = new JSONObject(message);
 						String type = jMessage.getString("type");
 						if (type.contentEquals("edi")) {
-							msgToActivity.what = Constant.LOAD;
+							msgToActivity.what = Constant.LOADDATA;
 						} else if (type.contentEquals("findmember")) {
 							msgToActivity.what = Constant.FINDMEMBER;
 						} else if (type.contentEquals("getmessage")) {
@@ -332,9 +332,11 @@ public class ChatService extends Service implements Runnable {
 						} else if (type.contentEquals("getsessions")) {
 							msgToActivity.what = Constant.SESSIONS;
 						} else if (type.contentEquals("vehicle")) {
-							msgToActivity.what = Constant.VEHICLE;
+							msgToActivity.what = Constant.VEHICLEDATA;
 						} else if (type.contentEquals("company")) {
-							msgToActivity.what = Constant.COMPANY;
+							msgToActivity.what = Constant.COMPANYDATA;
+						} else if (type.contentEquals("employee")) {
+							msgToActivity.what = Constant.EMPLOYEEDATA;
 						} else {
 							msgToActivity.what = Constant.MESSAGE;
 						}
