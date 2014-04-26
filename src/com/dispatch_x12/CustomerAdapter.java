@@ -1,7 +1,9 @@
 package com.dispatch_x12;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,11 +20,10 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class CustomerAdapter extends BaseAdapter
-		 {
+public class CustomerAdapter extends BaseAdapter {
 	private Context mContext;
 	private ViewHolder holder;
-	private ArrayList<HashMap<String, CharSequence>> mList;
+	private ArrayList<HashMap<String, String>> mList;
 
 	private enum enumCompanyType {
 		SH, CN, LTL, TL, BR, OTH
@@ -37,28 +38,51 @@ public class CustomerAdapter extends BaseAdapter
 	};
 
 	public CustomerAdapter(Context context,
-			ArrayList<HashMap<String, CharSequence>> arrayList) {
+			ArrayList<HashMap<String, String>> arrayList) {
 		super();
 		mList = arrayList;
 		mContext = context;
 	}
 
-//	public View[] getListofViews() {
-//		View[] view = { new View(mContext), new View(mContext),
-//				new View(mContext), new View(mContext), new View(mContext) };
-//		view[0] = holder.companyName;
-//		view[1] = holder.icc;
-//		view[2] = holder.isaID;
-//		return view;
-//	}
+	// public View[] getListofViews() {
+	// View[] view = { new View(mContext), new View(mContext),
+	// new View(mContext), new View(mContext), new View(mContext) };
+	// view[0] = holder.companyName;
+	// view[1] = holder.icc;
+	// view[2] = holder.isaID;
+	// return view;
+	// }
+
+	public void setRow(JSONObject jList) {
+		if (jList.length() > 0) {
+			HashMap<String, String> messageMap = new HashMap<String, String>();
+			messageMap.put("companyTypeSpinnerSelection",
+					jList.optString("companyTypeSpinnerSelection"));
+			messageMap.put("isaQualifierTypeSpinnerSelection",
+					jList.optString("isaQualifierTypeSpinnerSelection"));
+			messageMap.put("isaUsageIndicatorSpinnerSelection",
+					jList.optString("isaUsageIndicatorSpinnerSelection"));
+			messageMap.put("companyName", jList.optString("companyName"));
+			messageMap.put("isaId", jList.optString("isaId"));
+			messageMap.put("scac", jList.optString("scac"));
+			messageMap.put("duns", jList.optString("duns"));
+			messageMap.put("icc", jList.optString("icc"));
+			messageMap.put("dot", jList.optString("dot"));
+			mList.clear();
+			mList.add(messageMap);
+			notifyDataSetChanged();
+		} else {
+			addRow();
+		}
+	}
 
 	public void addRow() {
-		HashMap<String, CharSequence> messageMap = new HashMap<String, CharSequence>();
+		HashMap<String, String> messageMap = new HashMap<String, String>();
 		messageMap.put("companyTypeSpinnerSelection", "1");
 		messageMap.put("isaQualifierTypeSpinnerSelection", "1");
 		messageMap.put("isaUsageIndicatorSpinnerSelection", "1");
 		messageMap.put("companyName", "Quality Distribution,Inc");
-		messageMap.put("isaID", "IDTampa");
+		messageMap.put("isaId", "IDTampa");
 		messageMap.put("scac", "GCDC");
 		messageMap.put("duns", "DUNGCDC");
 		messageMap.put("icc", "iccGCDC");
@@ -71,10 +95,11 @@ public class CustomerAdapter extends BaseAdapter
 
 	public JSONObject saveToJSON(JSONObject jInfo) throws JSONException {
 		notifyDataSetChanged();
-		mList.get(0).put("companyName", holder.companyName.getText());
-		mList.get(0).put("isaID", holder.isaID.getText());
+		mList.get(0)
+				.put("companyName", holder.companyName.getText().toString());
+		mList.get(0).put("isaId", holder.isaId.getText().toString());
 		// There will only be one customer
-		HashMap<String, CharSequence> customerMap = mList.get(0);
+		HashMap<String, String> customerMap = mList.get(0);
 		jInfo = (JSONObject) JsonHelper.toJSON(customerMap);
 		return jInfo;
 	}
@@ -93,7 +118,7 @@ public class CustomerAdapter extends BaseAdapter
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		HashMap<String, CharSequence> customerMap = mList.get(position);
+		HashMap<String, String> customerMap = mList.get(position);
 		holder.companyName.setText(customerMap.get("companyName"));
 		holder.companyTypeSpinner.setSelection(Integer
 				.parseInt((String) customerMap
@@ -104,7 +129,7 @@ public class CustomerAdapter extends BaseAdapter
 		holder.isaUsageIndicatorSpinner.setSelection(Integer
 				.parseInt((String) customerMap
 						.get("isaUsageIndicatorSpinnerSelection")));
-		holder.isaID.setText(customerMap.get("isaID"));
+		holder.isaId.setText(customerMap.get("isaId"));
 		holder.scac.setText(customerMap.get("scac"));
 		holder.duns.setText(customerMap.get("duns"));
 		holder.icc.setText(customerMap.get("icc"));
@@ -117,7 +142,7 @@ public class CustomerAdapter extends BaseAdapter
 		public EditText companyName;
 		public Spinner companyTypeSpinner;
 		public Spinner isaQualifierTypeSpinner;
-		public EditText isaID;
+		public EditText isaId;
 		public Spinner isaUsageIndicatorSpinner;
 		public EditText scac;
 		public EditText duns;
@@ -132,11 +157,12 @@ public class CustomerAdapter extends BaseAdapter
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(0).put("companyName", companyName.getText());
+						mList.get(0).put("companyName",
+								companyName.getText().toString());
 					}
 
 				}
@@ -182,18 +208,18 @@ public class CustomerAdapter extends BaseAdapter
 						}
 					});
 
-			isaID = (EditText) view.findViewById(R.id.isaID);
+			isaId = (EditText) view.findViewById(R.id.isaId);
 			// attach the onFocusChange listener to the EditText
-			isaID.setOnFocusChangeListener(new OnFocusChangeListener() {
+			isaId.setOnFocusChangeListener(new OnFocusChangeListener() {
 
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(0).put("isaID", isaID.getText());
+						mList.get(0).put("isaID", isaId.getText().toString());
 					}
 
 				}
@@ -208,14 +234,14 @@ public class CustomerAdapter extends BaseAdapter
 						@Override
 						public void onItemSelected(AdapterView<?> arg0,
 								View arg1, int position, long arg3) {
-							
+
 							if (position == enumisaUsageIndicator.P.ordinal()) {
 								String t = enumisaUsageIndicator.P.name();
-								MainActivity.setToast("P: "+t,0);
-							}else{
+								MainActivity.setToast("P: " + t, 0);
+							} else {
 								String t = enumisaUsageIndicator.T.name();
-								MainActivity.setToast("P: "+t,0);
-								
+								MainActivity.setToast("P: " + t, 0);
+
 							}
 							;
 							mList.get(0).put(
@@ -237,12 +263,12 @@ public class CustomerAdapter extends BaseAdapter
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-						//		v.setBackgroundColor(Color.rgb(255, 248, 220));
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						// v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(0).put("scac", scac.getText());
+						mList.get(0).put("scac", scac.getText().toString());
 					}
 
 				}
@@ -256,11 +282,11 @@ public class CustomerAdapter extends BaseAdapter
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(0).put("duns", duns.getText());
+						mList.get(0).put("duns", duns.getText().toString());
 					}
 
 				}
@@ -274,11 +300,11 @@ public class CustomerAdapter extends BaseAdapter
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(0).put("icc", icc.getText());
+						mList.get(0).put("icc", icc.getText().toString());
 					}
 
 				}
@@ -292,11 +318,11 @@ public class CustomerAdapter extends BaseAdapter
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(0).put("dot", dot.getText());
+						mList.get(0).put("dot", dot.getText().toString());
 					}
 
 				}
@@ -306,13 +332,14 @@ public class CustomerAdapter extends BaseAdapter
 		}
 
 	}
+
 	@Override
 	public int getCount() {
 		return mList.size();
 	}
 
 	@Override
-	public HashMap<String, CharSequence> getItem(int position) {
+	public HashMap<String, String> getItem(int position) {
 		return mList.get(position);
 	}
 

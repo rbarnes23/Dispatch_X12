@@ -3,6 +3,14 @@
 
     <group android:id="@+id/group_default" >
          <item
+            android:id="@+id/addStop"
+            android:showAsAction="always"
+            android:title="@string/addStop"
+            android:titleCondensed="@string/addStop"
+            android:visible="false">
+        </item> 
+        
+        <item
             android:id="@+id/save"
             android:showAsAction="always"
             android:title="@string/save"

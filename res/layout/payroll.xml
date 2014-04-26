@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/payroll_header_row_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4sp"
+    android:layout_marginTop="16sp"
+    android:background="@color/white"
+    android:descendantFocusability="afterDescendants"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/payrollTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:text="Pay Type"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:visibility="visible" />
+
+        <Spinner
+        android:id="@+id/typeSpinner"
+        android:layout_width="@dimen/dropdown_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/payrollTitle"
+        android:layout_marginLeft="32dp"
+        android:layout_toRightOf="@+id/payrollTitle"
+        android:entries="@array/rateValueQualifier"
+        android:nextFocusForward="@+id/payrollInfo"
+        android:spinnerMode="dropdown"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="visible" />
+    
+    
+    <EditText
+        android:id="@+id/payrollInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/payrollTitle"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="120dp"
+        android:layout_toRightOf="@+id/typeSpinner"
+        android:hint="Enter Amount"
+        android:imeOptions="actionNext"
+        android:inputType="numberDecimal"
+        android:minWidth="240dp"
+        android:nextFocusForward="@+id/addPayroll"
+        android:text=""
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:visibility="visible" />
+
+
+    <ImageView
+        android:id="@+id/deleteIndicator"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16sp"
+        android:background="@drawable/btn_delete"
+        android:contentDescription="Delete payroll"
+        android:visibility="visible" />
+
+
+    <Button
+        android:id="@+id/addPayroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/typeSpinner"
+        android:layout_below="@+id/payrollTitle"
+        android:layout_marginBottom="32dp"
+        android:background="@android:color/transparent"
+        android:text="New Payroll"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+</RelativeLayout>

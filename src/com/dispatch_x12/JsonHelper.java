@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Message;
+
 import java.util.*;
 
 public class JsonHelper {
@@ -92,4 +94,37 @@ public class JsonHelper {
 		return mMemberFindList;
 
 	}
+
+	public static ArrayList<HashMap<String, String>> msgToArrayList(Message msg) {
+		// bundle = new Bundle(msg.getData());
+		List list = new ArrayList<HashMap<String, String>>();
+		try {
+			String message = msg.getData().getString("message");
+			JSONObject jReturn = new JSONObject(message);
+			JSONArray jMessage = new JSONArray(jReturn.getString("message"));
+			int size = jMessage.length();
+
+			for (int index = 0; index < size; index++) {
+				JSONObject jLine = new JSONObject(jMessage.get(index)
+						.toString());
+				list.add(jLine);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return (ArrayList<HashMap<String, String>>) list;
+	}
+
+	public static JSONArray hashMapToJson(
+			ArrayList<HashMap<String, String>> list) {
+		JSONArray jArray = new JSONArray();
+
+		for (HashMap<String, String> item : list) {
+			JSONObject jRow = new JSONObject(item);
+			jArray.put(jRow);
+		}
+		return jArray;
+	}
+
 }

@@ -47,6 +47,8 @@ public class LayOutRightDrawer extends Fragment {
 	private LoadListAdapter mLoadListAdapter;
 	private CompanyListAdapter mCompanyListAdapter;
 	private VehicleListAdapter mVehicleListAdapter;
+	private UserListAdapter mUserListAdapter;
+
 	private Context mContext;
 
 	@Override
@@ -162,9 +164,17 @@ public class LayOutRightDrawer extends Fragment {
 			setSpinnerFilter(className);
 
 		} else if (type == Constant.EMPLOYEEDATA) {
+			mMessageType = loadFilterAdapter.addRows();
+
+			spinnerStatus.setAdapter(loadFilterAdapter);
+
 			mEmployeeList.clear();
 			mEmployeeList.addAll(msg);
-			String test = msg.toString();
+			mUserListAdapter = new UserListAdapter(mContext,
+					R.layout.loadsrowlist, mEmployeeList);
+			mList.setAdapter(mUserListAdapter);
+			String className = mList.getAdapter().getClass().getSimpleName();
+			setSpinnerFilter(className);
 		}
 	}
 

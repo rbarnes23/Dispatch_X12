@@ -1,14 +1,15 @@
 package com.dispatch_x12;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,23 +25,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class CompanyEntry extends ListFragment {
 	ViewGroup root;
 	Context mContext;
 	private InputMethodManager imm;
 	private String mMemberid = AppSettings.getMemberid();
-	private ArrayList<HashMap<String, String>> mCustomerList;
-	private int mStatusSelectedPosition;
+	private ArrayList<HashMap<String, String>> mCompanyList;
 	private Address mLocation;
 	private LayoutInflater inflater;
 	private MergeAdapter adapter;
@@ -69,7 +63,7 @@ public class CompanyEntry extends ListFragment {
 
 		adapter = new MergeAdapter();
 		adapter.addView(buildSeparator("Company Information"), false);
-		adapter.addAdapter(buildCustomerList());
+		adapter.addAdapter(buildCompanyList());
 		adapter.addView(buildSeparator("Address"), false);
 		adapter.addAdapter(buildAddressList());
 		adapter.addView(buildSeparator("Email"), false);
@@ -79,57 +73,115 @@ public class CompanyEntry extends ListFragment {
 		adapter.addView(buildSeparator("Insurance Documents"), false);
 		adapter.addAdapter(buildInsuranceList());
 		setListAdapter(adapter);
-//		final ListView listView = (ListView) root.findViewById(android.R.id.list);
-//		listView.post(new Runnable(){
-//			  public void run() {
-//			    listView.setSelection(listView.getCount() - 1);
-//			  }});
 	}
 
-	public JSONObject createCustomerEntryMessage(JSONObject jCustomer)
+	private JSONObject createCompanyEntryMessage(JSONObject jCompany)
 			throws JSONException {
 		// Go thru adapters and build the JSONObject
 
-		 int adapterCount = adapter.getCount();
-		 // go thru the adapters and call the saveToJSON
-		 for (int count =0;count<adapterCount;count++){
-		 ListAdapter thisAdapter = adapter.getAdapter(count);
-		 if(thisAdapter.getClass().getSimpleName().contentEquals("PhoneListAdapter")){
-		 PhoneListAdapter phoneListAdapter=(PhoneListAdapter) thisAdapter;
-		 jCustomer=phoneListAdapter.saveToJSON(jCustomer);
-		 }
-		 else
-		 if(thisAdapter.getClass().getSimpleName().contentEquals("AddressAdapter")){
-		 AddressAdapter addressAdapter=(AddressAdapter) thisAdapter;
-		 jCustomer=addressAdapter.saveToJSON(jCustomer);
-		 }
-		 else
-		 if(thisAdapter.getClass().getSimpleName().contentEquals("EmailListAdapter")){
-		 EmailListAdapter emailAdapter=(EmailListAdapter) thisAdapter;
-		 jCustomer=emailAdapter.saveToJSON(jCustomer);
-		 }
-		 else
-		 if(thisAdapter.getClass().getSimpleName().contentEquals("CustomerAdapter")){
-		 CustomerAdapter customerAdapter=(CustomerAdapter) thisAdapter;
-		 jCustomer=customerAdapter.saveToJSON(jCustomer);
-		 }
-		 else
-		 if(thisAdapter.getClass().getSimpleName().contentEquals("InsuranceAdapter")){
-		 InsuranceAdapter customerAdapter=(InsuranceAdapter) thisAdapter;
-		 jCustomer=customerAdapter.saveToJSON(jCustomer);
-		 }
-		
-		 }
-		return jCustomer;
+		int adapterCount = adapter.getCount();
+		// go thru the adapters and call the saveToJSON
+		for (int count = 0; count < adapterCount; count++) {
+			ListAdapter thisAdapter = adapter.getAdapter(count);
+			if (thisAdapter.getClass().getSimpleName()
+					.contentEquals("PhoneListAdapter")) {
+				PhoneListAdapter phoneListAdapter = (PhoneListAdapter) thisAdapter;
+				jCompany = phoneListAdapter.saveToJSON(jCompany);
+			} else if (thisAdapter.getClass().getSimpleName()
+					.contentEquals("AddressAdapter")) {
+				AddressAdapter addressAdapter = (AddressAdapter) thisAdapter;
+				jCompany = addressAdapter.saveToJSON(jCompany);
+			} else if (thisAdapter.getClass().getSimpleName()
+					.contentEquals("EmailListAdapter")) {
+				EmailListAdapter emailAdapter = (EmailListAdapter) thisAdapter;
+				jCompany = emailAdapter.saveToJSON(jCompany);
+			} else if (thisAdapter.getClass().getSimpleName()
+					.contentEquals("CustomerAdapter")) {
+				CustomerAdapter companyAdapter = (CustomerAdapter) thisAdapter;
+				jCompany = companyAdapter.saveToJSON(jCompany);
+			} else if (thisAdapter.getClass().getSimpleName()
+					.contentEquals("InsuranceAdapter")) {
+				InsuranceAdapter insuranceAdapter = (InsuranceAdapter) thisAdapter;
+				jCompany = insuranceAdapter.saveToJSON(jCompany);
+			}
+
+		}
+		return jCompany;
+	}
+
+	private void setAdapterList(JSONObject jCompany) throws JSONException {
+		// Go thru adapters and build the JSONObject
+
+		int adapterCount = adapter.getCount();
+		// go thru the adapters and call the saveToJSON
+		for (int count = 0; count < adapterCount; count++) {
+			ListAdapter thisAdapter = adapter.getAdapter(count);
+			if (thisAdapter == null) {
+				continue;
+			}
+			if (thisAdapter.getClass().getSimpleName()
+					.contentEquals("PhoneListAdapter")) {
+				PhoneListAdapter phoneListAdapter = (PhoneListAdapter) thisAdapter;
+				JSONArray array = jCompany.getJSONArray("Phone");
+				ArrayList<HashMap<String, String>> arrayList = (ArrayList<HashMap<String, String>>) JsonHelper
+						.toList(array);
+				phoneListAdapter.setRow(arrayList);
+			} else if (thisAdapter.getClass().getSimpleName()
+					.contentEquals("AddressAdapter")) {
+				AddressAdapter addressAdapter = (AddressAdapter) thisAdapter;
+				JSONArray array = jCompany.getJSONArray("Address");
+				ArrayList<HashMap<String, String>> arrayList = (ArrayList<HashMap<String, String>>) JsonHelper
+						.toList(array);
+				addressAdapter.setRow(arrayList);
+			} else if (thisAdapter.getClass().getSimpleName()
+					.contentEquals("EmailListAdapter")) {
+				EmailListAdapter emailAdapter = (EmailListAdapter) thisAdapter;
+				JSONArray array = jCompany.getJSONArray("Email");
+				ArrayList<HashMap<String, String>> arrayList = (ArrayList<HashMap<String, String>>) JsonHelper
+						.toList(array);
+				emailAdapter.setRow(arrayList);
+
+			} else if (thisAdapter.getClass().getSimpleName()
+					.contentEquals("CustomerAdapter")) {
+				CustomerAdapter companyAdapter = (CustomerAdapter) thisAdapter;
+				companyAdapter.setRow(jCompany);
+
+			} else if (thisAdapter.getClass().getSimpleName()
+					.contentEquals("InsuranceAdapter")) {
+				InsuranceAdapter insuranceAdapter = (InsuranceAdapter) thisAdapter;
+				JSONArray array = jCompany.getJSONArray("Insurance");
+				ArrayList<HashMap<String, String>> arrayList = (ArrayList<HashMap<String, String>>) JsonHelper
+						.toList(array);
+				insuranceAdapter.setRow(arrayList);
+
+			}
+
+		}
 	}
 
 	void setMessage(JSONObject msg) {
-		try {
-			msg = createCustomerEntryMessage(msg);
-			MainActivity.setToast(msg.toString(), Toast.LENGTH_LONG);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (msg.optInt("entryType") == 1) {
+			try {
+				setAdapterList(msg);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// Take the message and put it into all the different adapters
+		} else {
+			try {
+
+				msg = createCompanyEntryMessage(msg);
+				Message msgToSend = ChatService.mServiceHandler
+						.obtainMessage(Constant.COMPANYDATA);
+				Bundle bundle = new Bundle();
+				bundle.putString("message", msg.toString());
+				msgToSend.setData(bundle);
+				sendMessage(msgToSend);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -218,50 +270,46 @@ public class CompanyEntry extends ListFragment {
 		}
 	}
 
-	private CustomerAdapter buildCustomerList() {
-		ArrayList<HashMap<String, CharSequence>> arrayList = new ArrayList<HashMap<String, CharSequence>>();
+	private CustomerAdapter buildCompanyList() {
+		ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
 		CustomerAdapter adapter = new CustomerAdapter(mContext, arrayList);
 		adapter.addRow();
 		return (adapter);
 	}
 
 	private AddressAdapter buildAddressList() {
-		ArrayList<HashMap<String, CharSequence>> arrayList = new ArrayList<HashMap<String, CharSequence>>();
+		ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
 		AddressAdapter adapter = new AddressAdapter(mContext, arrayList);
 		adapter.addRow();
 		return (adapter);
 	}
 
 	private PhoneListAdapter buildPhoneList() {
-		ArrayList<HashMap<String, CharSequence>> arrayList = new ArrayList<HashMap<String, CharSequence>>();
+		ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
 		PhoneListAdapter adapter = new PhoneListAdapter(mContext, arrayList);
 		adapter.addRow();
-//		final ListView listView = (ListView) root.findViewById(android.R.id.list);
-//		listView.post(new Runnable(){
-//			  public void run() {
-//			    listView.setSelection(listView.getCount() - 1);
-//			  }});
-
 		return (adapter);
 	}
 
 	private EmailListAdapter buildEmailList() {
-		ArrayList<HashMap<String, CharSequence>> arrayList = new ArrayList<HashMap<String, CharSequence>>();
+		ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
 		EmailListAdapter adapter = new EmailListAdapter(mContext, arrayList);
 		adapter.addRow();
 		return (adapter);
 	}
 
 	private InsuranceAdapter buildInsuranceList() {
-		ArrayList<HashMap<String, CharSequence>> arrayList = new ArrayList<HashMap<String, CharSequence>>();
+		ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
 		InsuranceAdapter adapter = new InsuranceAdapter(mContext, arrayList);
 		adapter.addRow();
 		return (adapter);
 	}
-	
+
 	private View buildSeparator(String heading) {
 		View header = inflater.inflate(R.layout.separator, null);
 		TextView separatorText = (TextView) header.findViewById(R.id.separator);
+		separatorText.setBackgroundColor(getResources().getColor(
+				R.color.skyblue));
 		((TextView) separatorText).setText(heading);
 		return (header);
 	}

@@ -18,7 +18,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class VehicleEntry extends ListFragment {
+public class X204Entry extends ListFragment {
 	ViewGroup root;
 	Context mContext;
 	private LayoutInflater inflater;
@@ -41,20 +41,27 @@ public class VehicleEntry extends ListFragment {
 		return root;
 	}
 
-	void init(ViewGroup root) {
+	private void init(ViewGroup root) {
+		addAdapters(3);
+	}
 
+	private void addAdapters(int noOfStops) {
+		setListAdapter(null);
+		adapter = null;
 		adapter = new MergeAdapter();
-		adapter.addView(buildSeparator("Registration Information"), false);
-		adapter.addAdapter(buildVehicleRegistrationList());
-		adapter.addView(buildSeparator("Insurance Documents"), false);
-		adapter.addAdapter(buildInsuranceList());
-
+		for (int i = 0; i < noOfStops; i++) {
+			adapter.addView(buildSeparator("Registration Information"), false);
+			adapter.addAdapter(buildVehicleRegistrationList());
+			adapter.addView(buildSeparator("Insurance Documents"), false);
+			adapter.addAdapter(buildInsuranceList());
+		}
 		setListAdapter(adapter);
 	}
 
-	public JSONObject createVehicleEntryMessage(JSONObject jVehicle)
-			throws JSONException {
+	public JSONArray createX204EntryMessage() throws JSONException {
 		// Go thru adapters and build the JSONObject
+		JSONArray jStopArray = new JSONArray();
+		JSONObject jStop = new JSONObject();
 
 		int adapterCount = adapter.getCount();
 		// go thru the adapters and call the saveToJSON
@@ -62,45 +69,65 @@ public class VehicleEntry extends ListFragment {
 			ListAdapter thisAdapter = adapter.getAdapter(count);
 			if (thisAdapter.getClass().getSimpleName()
 					.contentEquals("VehicleRegistrationAdapter")) {
+				// If a stop exists put it in here...probably a better way to
+				// handle this, but adapter count gives total rows of all
+				// adapters
+				if (jStop.length() > 0) {
+					jStopArray.put(jStop);
+					jStop = new JSONObject();
+				}
+
 				VehicleRegistrationAdapter vehicleRegistrationAdapter = (VehicleRegistrationAdapter) thisAdapter;
-				jVehicle = vehicleRegistrationAdapter.saveToJSON(jVehicle);
+				jStop = vehicleRegistrationAdapter.saveToJSON(jStop);
 			} else if (thisAdapter.getClass().getSimpleName()
 					.contentEquals("InsuranceAdapter")) {
 				InsuranceAdapter insuranceAdapter = (InsuranceAdapter) thisAdapter;
-				jVehicle = insuranceAdapter.saveToJSON(jVehicle);
+				jStop = insuranceAdapter.saveToJSON(jStop);
 			}
-
 		}
-		return jVehicle;
+
+		// Add the last stop
+		if (jStop.length() > 0) {
+			jStopArray.put(jStop);
+			jStop = new JSONObject();
+		}
+
+		return jStopArray;
 	}
 
 	private void setAdapterList(JSONObject jCompany) throws JSONException {
 		// Go thru adapters and build the JSONObject
-
-		int adapterCount = adapter.getCount();
+		JSONArray jArray = jCompany.getJSONArray("STOPS");
+		int noOfRows = jArray.length();
+		addAdapters(noOfRows);
+		int row = 0;
+		JSONObject jX204 = null;
+		int rowCount = adapter.getCount();
 		// go thru the adapters and call the saveToJSON
-		for (int count = 0; count < adapterCount; count++) {
+		for (int count = 0; count < rowCount; count++) {
 			ListAdapter thisAdapter = adapter.getAdapter(count);
 			if (thisAdapter == null) {
 				continue;
 			}
 			if (thisAdapter.getClass().getSimpleName()
 					.contentEquals("VehicleRegistrationAdapter")) {
+				jX204 = jArray.getJSONObject(row);
+				row++;
 				VehicleRegistrationAdapter vehicleRegistrationAdapter = (VehicleRegistrationAdapter) thisAdapter;
-				vehicleRegistrationAdapter.setRow(jCompany);
+
+				vehicleRegistrationAdapter.setRow(jX204);
 			} else if (thisAdapter.getClass().getSimpleName()
 					.contentEquals("InsuranceAdapter")) {
 				InsuranceAdapter insuranceAdapter = (InsuranceAdapter) thisAdapter;
-				JSONArray array = jCompany.getJSONArray("Insurance");
+				JSONArray array = jX204.getJSONArray("Insurance");
 				ArrayList<HashMap<String, String>> arrayList = (ArrayList<HashMap<String, String>>) JsonHelper
 						.toList(array);
 				insuranceAdapter.setRow(arrayList);
 			}
+			rowCount = adapter.getCount();	
 		}
 	}
 
-
-	
 	void setMessage(JSONObject msg) {
 		if (msg.optInt("entryType") == 1) {
 			try {
@@ -109,22 +136,25 @@ public class VehicleEntry extends ListFragment {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//Take the message and put it into all the different adapters
-	} else {
-		try {
-			msg = createVehicleEntryMessage(msg);
-			Message msgToSend = new Message();
-			Bundle bundle = new Bundle();
-			bundle.putString("message", msg.toString());
-			msgToSend.setData(bundle);
-			msgToSend.what = Constant.VEHICLEDATA;
-			sendMessage(msgToSend);
+			// Take the message and put it into all the different adapters
+		} else {
+			try {
+				JSONArray test = createX204EntryMessage();
+				msg = new JSONObject();
+				msg.put("STOPS", test);
+				Message msgToSend = new Message();
+				Bundle bundle = new Bundle();
+				bundle.putString("message", msg.toString());
+				msgToSend.setData(bundle);
+				msgToSend.what = Constant.VEHICLEDATA;
+				sendMessage(msgToSend);
 
-			MainActivity.setToast(msg.toString(), Toast.LENGTH_LONG);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}}
+				MainActivity.setToast(msg.toString(), Toast.LENGTH_LONG);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	// send message to service
@@ -156,7 +186,8 @@ public class VehicleEntry extends ListFragment {
 	private View buildSeparator(String heading) {
 		View header = inflater.inflate(R.layout.separator, null);
 		TextView separatorText = (TextView) header.findViewById(R.id.separator);
-		separatorText.setBackgroundColor(getResources().getColor(R.color.skyblue));		
+		separatorText.setBackgroundColor(getResources().getColor(
+				R.color.skyblue));
 		((TextView) separatorText).setText(heading);
 		return (header);
 	}

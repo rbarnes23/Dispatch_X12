@@ -11,7 +11,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -21,19 +20,21 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 
-public class EmailListAdapter extends BaseAdapter {
+public class PayrollAdapter extends BaseAdapter
+		 {
 	private Context mContext;
 	private ViewHolder holder;
-	private ArrayList<HashMap<String, String>> mList;
-
-	public EmailListAdapter(Context context,
-			ArrayList<HashMap<String, String>> emailList) {
+	ArrayList<HashMap<String, String>> mList;
+	
+	public PayrollAdapter(Context context,
+			ArrayList<HashMap<String, String>> payrollList) {
 		super();
-		mList = emailList;
+		mList = payrollList;
 		mContext = context;
 	}
-
+	
 	public void setRow(ArrayList<HashMap<String, String>> arrayList) {
 		mList = arrayList;
 		if (mList.size() < 1) {
@@ -43,14 +44,14 @@ public class EmailListAdapter extends BaseAdapter {
 		}
 	}
 
+	
 	public void addRow() {
-		HashMap<String, String> messageMap = new HashMap<String, String>();
-		messageMap.put("emailAddress", "");
-		messageMap.put("typeSpinnerSelected", "0");
-		mList.add(messageMap);
+		 HashMap<String, String> payrollMap = new HashMap<String, String>();
+			payrollMap.put("payrollInfo", "");
+			payrollMap.put("typeSpinnerSelected","0");
+		mList.add(payrollMap);
 		notifyDataSetChanged();
 	}
-
 	public void deleteRow(int row) {
 		mList.remove(row);
 		if (mList.size() == 0) {
@@ -61,10 +62,8 @@ public class EmailListAdapter extends BaseAdapter {
 	}
 
 	public JSONObject saveToJSON(JSONObject jInfo) throws JSONException {
-		notifyDataSetChanged();
-		//JSONArray jArray = new JSONArray(mList);
 		JSONArray jArray = JsonHelper.hashMapToJson(mList);
-		return jInfo.put("Email", jArray);
+		return jInfo.put("payrollInfo", jArray);
 	}
 
 	@Override
@@ -74,36 +73,31 @@ public class EmailListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			LayoutInflater mInflater = (LayoutInflater) mContext
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = mInflater.inflate(R.layout.email, null);
+			view = mInflater.inflate(R.layout.payroll, null);
 			holder = new ViewHolder(view);
 			view.setTag(holder);
 
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-
-		// Maintains position for each row so mList is always to the proper row
 		holder.row = position;
-
-		HashMap<String, String> emailMap = mList.get(position);
-		holder.emailAddress.setText(emailMap.get("emailAddress"));
-		holder.typeSpinner.setSelection(Integer.parseInt((String) emailMap
-				.get("typeSpinnerSelected")));
-
+		HashMap<String, String> payrollMap = mList.get(position);
+		holder.payrollInfo.setText(payrollMap.get("payrollInfo"));
+		holder.typeSpinner.setSelection(Integer
+				.parseInt((String) payrollMap
+						.get("typeSpinnerSelected")));
 		return view;
 	}
 
 	class ViewHolder {
 		public ImageView deleteIndicator;
-		public EditText emailAddress;
-		public Button addAddress;
+		public EditText payrollInfo;
 		public Spinner typeSpinner;
+		public Button addPayroll;
 		public int row;
-
+		
 		public ViewHolder(View view) {
-			emailAddress = (EditText) view.findViewById(R.id.emailAddress);
-			// attach the onFocusChange listener to the EditText
-			emailAddress.setOnFocusChangeListener(new OnFocusChangeListener() {
+			OnFocusChangeListener onFocusChanged= new OnFocusChangeListener() {
 
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
@@ -112,21 +106,29 @@ public class EmailListAdapter extends BaseAdapter {
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row).put("emailAddress",
-								emailAddress.getText().toString());
+						if(v.getId()==R.id.payrollInfo){
+							mList.get(row).put("payrollInfo", payrollInfo.getText().toString());
+						}
+							
 					}
 
 				}
+			};
+			
+			payrollInfo = (EditText) view.findViewById(R.id.payrollInfo);
 
-			});
+			// attach the onFocusChange listener to the EditText
+			payrollInfo.setOnFocusChangeListener(onFocusChanged);
 			typeSpinner = (Spinner) view.findViewById(R.id.typeSpinner);
-			typeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			typeSpinner
+			.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				@Override
-				public void onItemSelected(AdapterView<?> arg0, View arg1,
-						int position, long arg3) {
-
-					mList.get(row).put("typeSpinnerSelected",
+				public void onItemSelected(AdapterView<?> arg0,
+						View arg1, int position, long arg3) {
+					
+					mList.get(row).put(
+							"typeSpinnerSelected",
 							Integer.toString(position));
 
 				}
@@ -137,34 +139,22 @@ public class EmailListAdapter extends BaseAdapter {
 				}
 			});
 			// attach the onFocusChange listener to the EditText
-			typeSpinner.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-				@Override
-				public void onFocusChange(View v, boolean hasFocus) {
-					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
-					} else {
-						// set the row background white
-						v.setBackgroundColor(Color.rgb(255, 255, 255));
-					}
-
-				}
-
-			});
-
-			deleteIndicator = (ImageView) view
-					.findViewById(R.id.deleteIndicator);
+			typeSpinner.setOnFocusChangeListener(onFocusChanged);
+			deleteIndicator = (ImageView) view.findViewById(R.id.deleteIndicator);
 			deleteIndicator.setOnClickListener(new OnClickListener() {
-
+				
 				@Override
 				public void onClick(View v) {
 					deleteRow(row);
+					
+
 				}
 			});
 
-			addAddress = (Button) view.findViewById(R.id.addAddress);
-			addAddress.setOnClickListener(new OnClickListener() {
-
+			
+			addPayroll= (Button) view.findViewById(R.id.addPayroll);
+			addPayroll.setOnClickListener(new OnClickListener() {
+				
 				@Override
 				public void onClick(View v) {
 					addRow();
@@ -174,7 +164,6 @@ public class EmailListAdapter extends BaseAdapter {
 		}
 
 	}
-
 	@Override
 	public int getCount() {
 		return mList.size();
@@ -187,8 +176,7 @@ public class EmailListAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
 }

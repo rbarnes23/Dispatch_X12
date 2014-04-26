@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+//import org.apache.commons.lang.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,10 +30,10 @@ import android.view.View.OnFocusChangeListener;
 public class AddressAdapter extends BaseAdapter {
 	private Context mContext;
 	private ViewHolder holder;
-	ArrayList<HashMap<String, CharSequence>> mList;
+	private ArrayList<HashMap<String, String>> mList;
 
 	public AddressAdapter(Context context,
-			ArrayList<HashMap<String, CharSequence>> arrayList) {
+			ArrayList<HashMap<String, String>> arrayList) {
 		super();
 		mList = arrayList;
 		mContext = context;
@@ -44,7 +45,7 @@ public class AddressAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public HashMap<String, CharSequence> getItem(int position) {
+	public HashMap<String, String> getItem(int position) {
 		return mList.get(position);
 	}
 
@@ -53,10 +54,17 @@ public class AddressAdapter extends BaseAdapter {
 		return position;
 	}
 
-	
+	public void setRow(ArrayList<HashMap<String, String>> arrayList) {
+		mList = arrayList;
+		if (mList.size() < 1) {
+			addRow();
+		} else {
+			notifyDataSetChanged();
+		}
+	}
 
 	public void addRow() {
-		HashMap<String, CharSequence> messageMap = new HashMap<String, CharSequence>();
+		HashMap<String, String> messageMap = new HashMap<String, String>();
 		messageMap.put("fullAddress", "552 W Davis Blvd,Tampa,FL  33606");
 		messageMap.put("addressOne", "552 W Davis Blvd");
 		messageMap.put("addressTwo", "P.O.Box 552");
@@ -71,7 +79,10 @@ public class AddressAdapter extends BaseAdapter {
 
 	public JSONObject saveToJSON(JSONObject jInfo) throws JSONException {
 		notifyDataSetChanged();
-		JSONArray jArray = new JSONArray(mList);
+		JSONArray jArray = JsonHelper.hashMapToJson(mList);
+
+		// JSONArray jArray = new JSONArray(mList); this was not working as
+		// planned
 		return jInfo.put("Address", jArray);
 	}
 
@@ -99,7 +110,7 @@ public class AddressAdapter extends BaseAdapter {
 		}
 		if (addressList != null && addressList.size() > 0) {
 			Address addressFound = (Address) addressList.get(0);
-			HashMap<String, CharSequence> addressMap = mList.get(row);
+			HashMap<String, String> addressMap = mList.get(row);
 			addressMap.put("fullAddress", addressMap.get("fullAddress"));
 			addressMap.put("addressOne", addressFound.getAddressLine(0));
 			addressMap.put("addressTwo", addressMap.get("addressTwo"));
@@ -112,7 +123,7 @@ public class AddressAdapter extends BaseAdapter {
 			addressMap.put("lat",
 					Integer.toString((int) (addressFound.getLatitude() * 1E6)));
 			if (addressMap.get("lon").length() > 0) {
-				//use stateselector for this....does not work correcly now
+				// use stateselector for this....does not work correcly now
 				holder.verifyIndicator
 						.setBackgroundResource(R.drawable.map2424);
 			}
@@ -139,7 +150,7 @@ public class AddressAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.row = position;
-		HashMap<String, CharSequence> addressMap = mList.get(holder.row);
+		HashMap<String, String> addressMap = mList.get(holder.row);
 		holder.fullAddress.setText(addressMap.get("fullAddress"));
 
 		holder.typeSpinner.setSelection(Integer.parseInt((String) addressMap
@@ -178,12 +189,12 @@ public class AddressAdapter extends BaseAdapter {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row)
-								.put("fullAddress", fullAddress.getText());
+						mList.get(row).put("fullAddress",
+								fullAddress.getText().toString());
 					}
 
 				}
@@ -197,7 +208,7 @@ public class AddressAdapter extends BaseAdapter {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
@@ -231,11 +242,12 @@ public class AddressAdapter extends BaseAdapter {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row).put("addressOne", addressOne.getText());
+						mList.get(row).put("addressOne",
+								addressOne.getText().toString());
 					}
 
 				}
@@ -249,11 +261,12 @@ public class AddressAdapter extends BaseAdapter {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row).put("addressTwo", addressTwo.getText());
+						mList.get(row).put("addressTwo",
+								addressTwo.getText().toString());
 					}
 
 				}
@@ -267,11 +280,11 @@ public class AddressAdapter extends BaseAdapter {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row).put("city", city.getText());
+						mList.get(row).put("city", city.getText().toString());
 					}
 
 				}
@@ -285,11 +298,11 @@ public class AddressAdapter extends BaseAdapter {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row).put("state", state.getText());
+						mList.get(row).put("state", state.getText().toString());
 					}
 
 				}
@@ -303,11 +316,12 @@ public class AddressAdapter extends BaseAdapter {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row).put("postalCode", postalCode.getText());
+						mList.get(row).put("postalCode",
+								postalCode.getText().toString());
 					}
 
 				}
@@ -337,22 +351,23 @@ public class AddressAdapter extends BaseAdapter {
 			});
 
 			addAddress = (Button) view.findViewById(R.id.addAddress);
-			 // attach the onFocusChange listener to the EditText
-			 addAddress.setOnFocusChangeListener(new OnFocusChangeListener() {
-			
-			 @Override
-			 public void onFocusChange(View v, boolean hasFocus) {
-			 if (hasFocus) {
-			 		v.setBackgroundColor(Color.rgb(255, 248, 220));
-			 } else {
-			 // set the row background white
-			 v.setBackgroundColor(Color.rgb(255, 255, 255));
-			 //mList.get(row).put("fullAddress", fullAddress.getText());
-			 }
-			
-			 }
-			
-			 });
+			// attach the onFocusChange listener to the EditText
+			addAddress.setOnFocusChangeListener(new OnFocusChangeListener() {
+
+				@Override
+				public void onFocusChange(View v, boolean hasFocus) {
+					if (hasFocus) {
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
+					} else {
+						// set the row background white
+						v.setBackgroundColor(Color.rgb(255, 255, 255));
+						// mList.get(row).put("fullAddress",
+						// fullAddress.getText());
+					}
+
+				}
+
+			});
 
 			addAddress.setOnClickListener(new OnClickListener() {
 

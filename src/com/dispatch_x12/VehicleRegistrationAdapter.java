@@ -26,10 +26,10 @@ import android.view.View.OnFocusChangeListener;
 public class VehicleRegistrationAdapter extends BaseAdapter {
 	private Context mContext;
 	private ViewHolder holder;
-	ArrayList<HashMap<String, CharSequence>> mList;
+	ArrayList<HashMap<String, String>> mList;
 
 	public VehicleRegistrationAdapter(Context context,
-			ArrayList<HashMap<String, CharSequence>> arrayList) {
+			ArrayList<HashMap<String, String>> arrayList) {
 		super();
 		mList = arrayList;
 		mContext = context;
@@ -41,7 +41,7 @@ public class VehicleRegistrationAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public HashMap<String, CharSequence> getItem(int position) {
+	public HashMap<String, String> getItem(int position) {
 		return mList.get(position);
 	}
 
@@ -50,10 +50,35 @@ public class VehicleRegistrationAdapter extends BaseAdapter {
 		return position;
 	}
 
+
+	public void setRow(JSONObject jList) {
+		if (jList.length() > 0) {
+			HashMap<String, String> messageMap = new HashMap<String, String>();
+			messageMap.put("registeredTo", jList.optString("registeredTo"));
+			messageMap.put("plate", jList.optString("plate"));
+			messageMap.put("decal", jList.optString("decal"));
+			messageMap.put("expires", jList.optString("expires"));
+			messageMap.put("vin", jList.optString("vin"));
+			messageMap.put("titleNo", jList.optString("titleNo"));
+			messageMap.put("plateType", jList.optString("plateType"));
+
+			messageMap.put("typeSpinnerSelected", jList.optString("typeSpinnerSelected"));
+			messageMap.put("colorSpinnerSelected", jList.optString("colorSpinnerSelected"));
+			messageMap.put("makeSpinnerSelected",jList.optString("makeSpinnerSelected"));
+			messageMap.put("modelSpinnerSelected",jList.optString("modelSpinnerSelected"));
+			messageMap.put("yearSpinnerSelected",jList.optString("yearSpinnerSelected"));
+
+			mList.clear();
+			mList.add(messageMap);
+			notifyDataSetChanged();
+		} else {
+			addRow();
+		}
+	}
 	
 
 	public void addRow() {
-		HashMap<String, CharSequence> messageMap = new HashMap<String, CharSequence>();
+		HashMap<String, String> messageMap = new HashMap<String, String>();
 		messageMap.put("registeredTo", "");
 		messageMap.put("plate", "");
 		messageMap.put("decal", "");
@@ -73,9 +98,11 @@ public class VehicleRegistrationAdapter extends BaseAdapter {
 	}
 
 	public JSONObject saveToJSON(JSONObject jInfo) throws JSONException {
+		// There will only be one customer
 		notifyDataSetChanged();
-		JSONArray jArray = new JSONArray(mList);
-		return jInfo.put("registrationInfo", jArray);
+		HashMap<String, String> map = mList.get(0);
+		jInfo = (JSONObject) JsonHelper.toJSON(map);
+		return jInfo;
 	}
 
 	public void deleteRow(int row) {
@@ -101,23 +128,23 @@ public class VehicleRegistrationAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-//		holder.row = position;
-//		HashMap<String, CharSequence> registrationMap = mList.get(holder.row);
-//		holder.registeredTo.setText(registrationMap.get("registeredTo"));
-//		holder.plate.setText(registrationMap.get("plate"));
-//		holder.decal.setText(registrationMap.get("decal"));
-//		holder.expires.setText(registrationMap.get("expires"));
-//
-//		holder.typeSpinner.setSelection(Integer.parseInt((String) registrationMap
-//				.get("typeSpinnerSelected")));
-//		holder.colorSpinner.setSelection(Integer.parseInt((String) registrationMap
-//				.get("colorSpinnerSelected")));
-//		holder.makeSpinner.setSelection(Integer.parseInt((String) registrationMap
-//				.get("makeSpinnerSelected")));
-//		holder.modelSpinner.setSelection(Integer.parseInt((String) registrationMap
-//				.get("modelSpinnerSelected")));
-//		holder.yearSpinner.setSelection(Integer.parseInt((String) registrationMap
-//				.get("yearSpinnerSelected")));
+		holder.row = position;
+		HashMap<String, String> registrationMap = mList.get(holder.row);
+		holder.registeredTo.setText(registrationMap.get("registeredTo"));
+		holder.plate.setText(registrationMap.get("plate"));
+		holder.decal.setText(registrationMap.get("decal"));
+		holder.expires.setText(registrationMap.get("expires"));
+
+		holder.typeSpinner.setSelection(Integer.parseInt((String) registrationMap
+				.get("typeSpinnerSelected")));
+		holder.colorSpinner.setSelection(Integer.parseInt((String) registrationMap
+				.get("colorSpinnerSelected")));
+		holder.makeSpinner.setSelection(Integer.parseInt((String) registrationMap
+				.get("makeSpinnerSelected")));
+		holder.modelSpinner.setSelection(Integer.parseInt((String) registrationMap
+				.get("modelSpinnerSelected")));
+		holder.yearSpinner.setSelection(Integer.parseInt((String) registrationMap
+				.get("yearSpinnerSelected")));
 		return view;
 	}
 
@@ -139,7 +166,6 @@ public class VehicleRegistrationAdapter extends BaseAdapter {
 		public EditText titleNo;
 		public EditText plateType;
 		
-		public Button addVehicle;
 		public int row;
 
 		public ViewHolder(View view) {
@@ -155,7 +181,7 @@ public class VehicleRegistrationAdapter extends BaseAdapter {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
 						mList.get(row)
-								.put("registeredTo", registeredTo.getText());
+								.put("registeredTo", registeredTo.getText().toString());
 					}
 
 				}
@@ -173,7 +199,7 @@ public class VehicleRegistrationAdapter extends BaseAdapter {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
 						mList.get(row)
-								.put("plate", plate.getText());
+								.put("plate", plate.getText().toString());
 					}
 
 				}
@@ -192,7 +218,7 @@ public class VehicleRegistrationAdapter extends BaseAdapter {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
 						mList.get(row)
-								.put("decal", decal.getText());
+								.put("decal", decal.getText().toString());
 					}
 
 				}
@@ -211,7 +237,7 @@ public class VehicleRegistrationAdapter extends BaseAdapter {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
 						mList.get(row)
-								.put("expires", expires.getText());
+								.put("expires", expires.getText().toString());
 					}
 
 				}
@@ -335,32 +361,6 @@ public class VehicleRegistrationAdapter extends BaseAdapter {
 				}
 			});
 
-			addVehicle = (Button) view.findViewById(R.id.addVehicle);
-			 // attach the onFocusChange listener to the EditText
-			 addVehicle.setOnFocusChangeListener(new OnFocusChangeListener() {
-			
-			 @Override
-			 public void onFocusChange(View v, boolean hasFocus) {
-			 if (hasFocus) {
-			 		v.setBackgroundColor(Color.rgb(255, 248, 220));
-			 } else {
-			 // set the row background white
-			 v.setBackgroundColor(Color.rgb(255, 255, 255));
-			 //mList.get(row).put("fullAddress", fullAddress.getText());
-			 }
-			
-			 }
-			
-			 });
-
-			addVehicle.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					addRow();
-
-				}
-			});
 
 		}
 

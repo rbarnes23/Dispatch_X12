@@ -22,20 +22,34 @@ public class UserAdapter extends
 		BaseAdapter {
 	private Context mContext;
 	private ViewHolder holder;
-	ArrayList<HashMap<String, CharSequence>> mList;
+	ArrayList<HashMap<String, String>> mList;
 	
 	public UserAdapter(Context context,
-			ArrayList<HashMap<String, CharSequence>> phoneList) {
+			ArrayList<HashMap<String, String>> userList) {
 		super();
-		mList = phoneList;
+		mList = userList;
 		mContext = context;
 	}
 	
+	public void setRow(JSONObject jList) {
+		if (jList.length() > 0) {
+			HashMap<String, String> messageMap = new HashMap<String, String>();
+			messageMap.put("firstName", jList.optString("firstName"));
+			messageMap.put("lastName", jList.optString("lastName"));
+			messageMap.put("typeSpinnerSelected", jList.optString("typeSpinnerSelected"));
+			mList.clear();
+			mList.add(messageMap);
+			notifyDataSetChanged();
+		} else {
+			addRow();
+		}
+	}
+
 	
 	public void addRow() {
-		 HashMap<String, CharSequence> userMap = new HashMap<String, CharSequence>();
+		 HashMap<String, String> userMap = new HashMap<String, String>();
 			userMap.put("firstName", "");
-			userMap.put("lasttName", "");
+			userMap.put("lastName", "");
 			userMap.put("typeSpinnerSelected","0");
 		mList.add(userMap);
 		notifyDataSetChanged();
@@ -52,7 +66,7 @@ public class UserAdapter extends
 	public JSONObject saveToJSON(JSONObject jInfo) throws JSONException {
 		// There will only be one customer
 		notifyDataSetChanged();
-		HashMap<String, CharSequence> userMap = mList.get(0);
+		HashMap<String, String> userMap = mList.get(0);
 		jInfo = (JSONObject) JsonHelper.toJSON(userMap);
 		return jInfo;
 
@@ -73,7 +87,7 @@ public class UserAdapter extends
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.row = position;
-		HashMap<String, CharSequence> userMap = mList.get(position);
+		HashMap<String, String> userMap = mList.get(position);
 		holder.firstName.setText(userMap.get("firstName"));
 		holder.lastName.setText(userMap.get("lastName"));
 
@@ -102,7 +116,7 @@ public class UserAdapter extends
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row).put("firstName", firstName.getText());
+						mList.get(row).put("firstName", firstName.getText().toString());
 					}
 
 				}
@@ -121,7 +135,7 @@ public class UserAdapter extends
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row).put("lastName", lastName.getText());
+						mList.get(row).put("lastName", lastName.getText().toString());
 					}
 
 				}
@@ -159,7 +173,7 @@ public class UserAdapter extends
 	}
 
 	@Override
-	public HashMap<String, CharSequence> getItem(int position) {
+	public HashMap<String, String> getItem(int position) {
 		return mList.get(position);
 	}
 

@@ -72,6 +72,9 @@ public class ExpandableMenuAdapter extends BaseExpandableListAdapter {
 
 				} else if (detailName.contentEquals("messages")) {
 					msgToActivity.what = Constant.MESSAGEMENU;
+
+				} else if (detailName.contentEquals("204")) {
+					msgToActivity.what = Constant.X204;
 				}
 
 				if (msgToActivity.what > 0) {

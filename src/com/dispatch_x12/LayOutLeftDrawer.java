@@ -53,6 +53,9 @@ public class LayOutLeftDrawer extends Fragment {
 			addMemberToGroup("Messages", "Messages");
 			addMemberToGroup("Forms", "204");
 			addMemberToGroup("Forms", "210");
+			addMemberToGroup("Forms", "990");
+			addMemberToGroup("Forms", "997");
+
 			addMemberToGroup("Maintenance", "Company");
 			addMemberToGroup("Maintenance", "Employees");
 			addMemberToGroup("Maintenance", "Vehicles");

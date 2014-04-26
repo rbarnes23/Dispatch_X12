@@ -26,18 +26,27 @@ public class PhoneListAdapter extends BaseAdapter
 		 {
 	private Context mContext;
 	private ViewHolder holder;
-	ArrayList<HashMap<String, CharSequence>> mList;
+	private ArrayList<HashMap<String, String>> mList;
 	
 	public PhoneListAdapter(Context context,
-			ArrayList<HashMap<String, CharSequence>> phoneList) {
+			ArrayList<HashMap<String, String>> phoneList) {
 		super();
 		mList = phoneList;
 		mContext = context;
 	}
 	
+	public void setRow(ArrayList<HashMap<String, String>> arrayList) {
+		mList = arrayList;
+		if (mList.size() < 1) {
+			addRow();
+		} else {
+			notifyDataSetChanged();
+		}
+	}
+
 	
 	public void addRow() {
-		 HashMap<String, CharSequence> phoneMap = new HashMap<String, CharSequence>();
+		 HashMap<String, String> phoneMap = new HashMap<String, String>();
 			phoneMap.put("phoneNo", "");
 			phoneMap.put("typeSpinnerSelected","0");
 		mList.add(phoneMap);
@@ -53,7 +62,7 @@ public class PhoneListAdapter extends BaseAdapter
 	}
 
 	public JSONObject saveToJSON(JSONObject jInfo) throws JSONException {
-		JSONArray jArray=new  JSONArray(mList);
+		JSONArray jArray = JsonHelper.hashMapToJson(mList);
 		return jInfo.put("Phone", jArray);
 	}
 
@@ -72,7 +81,7 @@ public class PhoneListAdapter extends BaseAdapter
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.row = position;
-		HashMap<String, CharSequence> phoneMap = mList.get(position);
+		HashMap<String, String> phoneMap = mList.get(position);
 		holder.phoneNo.setText(phoneMap.get("phoneNo"));
 		holder.typeSpinner.setSelection(Integer
 				.parseInt((String) phoneMap
@@ -99,7 +108,7 @@ public class PhoneListAdapter extends BaseAdapter
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
 						if(v.getId()==R.id.phoneNo){
-							mList.get(row).put("phoneNo", phoneNo.getText());
+							mList.get(row).put("phoneNo", phoneNo.getText().toString());
 						}
 							
 					}
@@ -162,7 +171,7 @@ public class PhoneListAdapter extends BaseAdapter
 	}
 
 	@Override
-	public HashMap<String, CharSequence> getItem(int position) {
+	public HashMap<String, String> getItem(int position) {
 		return mList.get(position);
 	}
 

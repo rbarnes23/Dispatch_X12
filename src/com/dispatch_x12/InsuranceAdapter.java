@@ -25,17 +25,26 @@ import android.view.View.OnFocusChangeListener;
 public class InsuranceAdapter extends BaseAdapter {
 	private Context mContext;
 	private ViewHolder holder;
-	ArrayList<HashMap<String, CharSequence>> mList;
+	ArrayList<HashMap<String, String>> mList;
 
 	public InsuranceAdapter(Context context,
-			ArrayList<HashMap<String, CharSequence>> insuranceList) {
+			ArrayList<HashMap<String, String>> insuranceList) {
 		super();
 		mList = insuranceList;
 		mContext = context;
 	}
 
+	public void setRow(ArrayList<HashMap<String, String>> arrayList) {
+		mList = arrayList;
+		if (mList.size() < 1) {
+			addRow();
+		} else {
+			notifyDataSetChanged();
+		}
+	}
+
 	public void addRow() {
-		HashMap<String, CharSequence> companyMap = new HashMap<String, CharSequence>();
+		HashMap<String, String> companyMap = new HashMap<String, String>();
 		companyMap.put("companyName", "");
 		companyMap.put("periodFrom", "");
 		companyMap.put("periodTo", "");
@@ -55,10 +64,9 @@ public class InsuranceAdapter extends BaseAdapter {
 
 	public JSONObject saveToJSON(JSONObject jInfo) throws JSONException {
 		notifyDataSetChanged();
-		JSONArray jArray = new JSONArray(mList);
+		JSONArray jArray = JsonHelper.hashMapToJson(mList);
 		return jInfo.put("Insurance", jArray);
 	}
-	
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -75,7 +83,7 @@ public class InsuranceAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.row = position;
-		HashMap<String, CharSequence> companyMap = mList.get(position);
+		HashMap<String, String> companyMap = mList.get(position);
 		holder.companyName.setText(companyMap.get("companyName"));
 		holder.periodFrom.setText(companyMap.get("periodFrom"));
 		holder.periodTo.setText(companyMap.get("periodTo"));
@@ -107,8 +115,8 @@ public class InsuranceAdapter extends BaseAdapter {
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row)
-								.put("companyName", companyName.getText());
+						mList.get(row).put("companyName",
+								companyName.getText().toString());
 					}
 
 				}
@@ -127,7 +135,8 @@ public class InsuranceAdapter extends BaseAdapter {
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row).put("periodFrom", periodFrom.getText());
+						mList.get(row).put("periodFrom",
+								periodFrom.getText().toString());
 					}
 
 				}
@@ -146,7 +155,8 @@ public class InsuranceAdapter extends BaseAdapter {
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
-						mList.get(row).put("periodTo", periodTo.getText());
+						mList.get(row).put("periodTo",
+								periodTo.getText().toString());
 					}
 
 				}
@@ -176,7 +186,7 @@ public class InsuranceAdapter extends BaseAdapter {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 					if (hasFocus) {
-								v.setBackgroundColor(Color.rgb(255, 248, 220));
+						v.setBackgroundColor(Color.rgb(255, 248, 220));
 					} else {
 						// set the row background white
 						v.setBackgroundColor(Color.rgb(255, 255, 255));
@@ -186,7 +196,6 @@ public class InsuranceAdapter extends BaseAdapter {
 
 			});
 
-			
 			deleteIndicator = (ImageView) view
 					.findViewById(R.id.deleteIndicator);
 			deleteIndicator.setOnClickListener(new OnClickListener() {
@@ -216,7 +225,7 @@ public class InsuranceAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public HashMap<String, CharSequence> getItem(int position) {
+	public HashMap<String, String> getItem(int position) {
 		return mList.get(position);
 	}
 

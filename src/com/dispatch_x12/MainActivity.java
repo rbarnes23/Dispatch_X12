@@ -27,6 +27,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -55,6 +56,7 @@ public class MainActivity extends CustomFragmentActivity {
 	private Bundle stopBundle;
 	private static Context sContext;
 	private int mHeight;
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -86,12 +88,17 @@ public class MainActivity extends CustomFragmentActivity {
 				Fragment currentFragment = fm
 						.findFragmentById(R.id.right_drawer);
 				LinearLayout detailLayout = (LinearLayout) findViewById(R.id.linearlayout02);
-				if(mFirst){
-					mHeight=detailLayout.getLayoutParams().height;
+				if (mFirst) {
+					mHeight = detailLayout.getLayoutParams().height;
 				}
-				closeAllDrawers();
+				closeAllDrawers();// need to change this so if there is a menu
+									// item it opens right drawer
 
+				boolean itemToLoad = false;
+				JSONObject jToSend = null;
+				mMenu.findItem(R.id.addStop).setVisible(false);
 				switch (msg.what) {
+				
 				case 0:
 					// return;
 					break;
@@ -108,6 +115,8 @@ public class MainActivity extends CustomFragmentActivity {
 					setLayoutParams(detailLayout, 0);
 					sendDataToRightDrawer(Constant.COMPANYDATA,
 							(ArrayList<HashMap<String, String>>) mCompanyList);
+					mDrawerLayout.openDrawer(Gravity.RIGHT);
+
 					break;
 				case Constant.VEHICLEMENU:
 					// Handle Vehicles
@@ -123,6 +132,7 @@ public class MainActivity extends CustomFragmentActivity {
 					setLayoutParams(detailLayout, 0);
 					sendDataToRightDrawer(Constant.VEHICLEDATA,
 							(ArrayList<HashMap<String, String>>) mVehicleList);
+					mDrawerLayout.openDrawer(Gravity.RIGHT);
 
 					break;
 				case Constant.EMPLOYEEMENU:
@@ -139,14 +149,37 @@ public class MainActivity extends CustomFragmentActivity {
 					setLayoutParams(detailLayout, 0);
 					sendDataToRightDrawer(Constant.EMPLOYEEDATA,
 							(ArrayList<HashMap<String, String>>) mEmployeeList);
+					mDrawerLayout.openDrawer(Gravity.RIGHT);
 
 					break;
+				case Constant.X204:
+					// Handle 204 Loads
+					currentFragment = fm.findFragmentById(R.id.frag_master);
+					X204Entry x204Entry = new X204Entry();
+					// Preserve current Fragment contents so I can get it later
+					ft.addToBackStack(currentFragment.getTag());
+					ft.replace(R.id.frag_master, x204Entry);
+					ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+					ft.commit();
+					mMenu.findItem(R.id.save).setVisible(true);
+					mMenu.findItem(R.id.addStop).setVisible(true);
+					// Make Full Screen
+					setLayoutParams(detailLayout, 0);
+					sendDataToRightDrawer(Constant.VEHICLEDATA,
+							(ArrayList<HashMap<String, String>>) mVehicleList);
+					mDrawerLayout.openDrawer(Gravity.RIGHT);
+
+					break;
+
 				case Constant.RATESMENU:
-					//Handles Rates
+					// Handles Rates
 					sendDataToRightDrawer(Constant.RATESDATA,
 							(ArrayList<HashMap<String, String>>) mRatesList);
+					mDrawerLayout.openDrawer(Gravity.RIGHT);
+
 					break;
-				case Constant.STOPINFO:  //This handles signed receivers and os&d info
+				case Constant.STOPINFO: // This handles signed receivers and
+										// os&d info
 					stopBundle = new Bundle();
 					stopBundle = msg.getData();
 
@@ -168,74 +201,78 @@ public class MainActivity extends CustomFragmentActivity {
 					sendDataToBottomDrawer(msg);
 					break;
 				case Constant.EMPLOYEEDATA:
-					bundle = new Bundle(msg.getData());
-					try {
-						JSONObject jReturn = new JSONObject(
-								bundle.getString("message"));
-						mEmployeeList = new ArrayList<HashMap<String, String>>();
-						mEmployeeList.add((String) jReturn.get("message"));
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					itemToLoad = (msg.arg1 == 1) ? true : false;
+					jToSend = null;
+					if (itemToLoad) {
+						bundle = new Bundle(msg.getData());
+
+						try {
+							jToSend = new JSONObject(
+									bundle.getString("message"));
+							jToSend.put("entryType", 1);
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						sendDataToUserEntry(jToSend);
+					} else {
+						mEmployeeList = JsonHelper.msgToArrayList(msg);
 					}
+
 					break;
+
 				case Constant.RATESDATA:
-					bundle = new Bundle(msg.getData());
-					try {
-						JSONObject jReturn = new JSONObject(
-								bundle.getString("message"));
-
-						mRatesList = new ArrayList<HashMap<String, String>>();
-						mRatesList.add((String) jReturn.get("message"));
-
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					mRatesList = JsonHelper.msgToArrayList(msg);
 					break;
 
 				case Constant.VEHICLEDATA:
-					bundle = new Bundle(msg.getData());
-					try {
-						JSONObject jReturn = new JSONObject(
-								bundle.getString("message"));
-						JSONArray jMessage = new JSONArray(
-								jReturn.getString("message"));
-						int size = jMessage.length();
-						mVehicleList = new ArrayList<HashMap<String, String>>();
+					itemToLoad = (msg.arg1 == 1) ? true : false;
+					jToSend = null;
+					if (itemToLoad) {
+						bundle = new Bundle(msg.getData());
 
-						for (int index = 0; index < size; index++) {
-							JSONObject jLine = new JSONObject(jMessage.get(
-									index).toString());
-							mVehicleList.add(jLine);
+						try {
+							jToSend = new JSONObject(
+									bundle.getString("message"));
+							jToSend.put("entryType", 1);
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+
+						// JUST FOR TESTING
+						currentFragment = fm.findFragmentById(R.id.frag_master);
+						x204Entry = new X204Entry();
+						String className=currentFragment.getClass().getSimpleName();
+						if (!className.contentEquals("VehicleEntry")) {
+							sendDataToX204Entry(jToSend);
+						} else {
+							sendDataToVehicleEntry(jToSend);
+						}
+					} else {
+						mVehicleList = JsonHelper.msgToArrayList(msg);
 					}
+
 					break;
 				case Constant.COMPANYDATA:
-					bundle = new Bundle(msg.getData());
-					try {
-						JSONObject jReturn = new JSONObject(
-								bundle.getString("message"));
-						JSONArray jMessage = new JSONArray(
-								jReturn.getString("message"));
-						int size = jMessage.length();
-						mCompanyList = new ArrayList<HashMap<String, String>>();
+					itemToLoad = (msg.arg1 == 1) ? true : false;
+					jToSend = null;
+					if (itemToLoad) {
+						bundle = new Bundle(msg.getData());
 
-						for (int index = 0; index < size; index++) {
-							JSONObject jLine = new JSONObject(jMessage.get(
-									index).toString());
-							mCompanyList.add(jLine);
+						try {
+							jToSend = new JSONObject(
+									bundle.getString("message"));
+							jToSend.put("entryType", 1);
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 
-						// mCompanyList = new ArrayList<HashMap<String,
-						// String>>();
-						// mCompanyList.add((String) jReturn.get("message"));
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						sendDataToCompanyEntry(jToSend);
+					} else {
+						mCompanyList = JsonHelper.msgToArrayList(msg);
 					}
 					break;
 				case Constant.SESSIONS:
@@ -260,10 +297,10 @@ public class MainActivity extends CustomFragmentActivity {
 					mMenu.findItem(R.id.save).setVisible(false);
 					// Make Full Screen
 					setLayoutParams(detailLayout, mHeight);
-					mLoadList=MessageProcessing.getMessageList();
+					mLoadList = MessageProcessing.getMessageList();
 					sendDataToRightDrawer(Constant.LOADDATA,
 							(ArrayList<HashMap<String, String>>) mLoadList);
-
+					mDrawerLayout.openDrawer(Gravity.RIGHT);
 					break;
 				}
 			}

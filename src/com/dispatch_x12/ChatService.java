@@ -57,9 +57,50 @@ public class ChatService extends Service implements Runnable {
 			mServiceHandler = new Handler() {
 				public void handleMessage(Message msg) {
 					switch (msg.what) {
+					case Constant.COMPANYDATA:
+						if (mConnected) {
+							// create token
+							Bundle bundle = msg.getData();
+							String msgFromActivity = bundle
+									.getString("message");
+							Token token = new Token();
+							String msgtoSend = token.createUpdateToken(
+									AppSettings.getMemberid(), "COMPANYDATA",
+									msgFromActivity);
+							sendData(msgtoSend);
+						}
+						break;
+					case Constant.VEHICLEDATA:
+						if (mConnected) {
+							// create token
+							Bundle bundle = msg.getData();
+							String msgFromActivity = bundle
+									.getString("message");
+							Token token = new Token();
+							String msgtoSend = token.createUpdateToken(
+									AppSettings.getMemberid(), "VEHICLEDATA",
+									msgFromActivity);
+							sendData(msgtoSend);
+						}
+						break;
+					case Constant.EMPLOYEEDATA:
+						if (mConnected) {
+							// create token
+							Bundle bundle = msg.getData();
+							String msgFromActivity = bundle
+									.getString("message");
+							Token token = new Token();
+							String msgtoSend = token.createUpdateToken(
+									AppSettings.getMemberid(), "EMPLOYEEDATA",
+									msgFromActivity);
+							sendData(msgtoSend);
+						}
+						break;
+
 					case Constant.X204:
 					case Constant.X990:
 					case Constant.X997:
+						break;
 					case Constant.X210:
 						if (mConnected) {
 							// add the status which came from service and show

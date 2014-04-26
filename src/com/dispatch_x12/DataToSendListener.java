@@ -16,5 +16,6 @@ public interface DataToSendListener {
     public void sendDataToCompanyEntry(JSONObject msg);
     public void sendDataToUserEntry(JSONObject msg);
     public void sendDataToVehicleEntry(JSONObject msg);
+    public void sendDataToX204Entry(JSONObject msg);
 
 }

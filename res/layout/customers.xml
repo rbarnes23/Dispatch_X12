@@ -84,7 +84,7 @@
         android:layout_marginLeft="16dp"
         android:layout_toRightOf="@+id/isaQualifierHeading"
         android:entries="@array/isaQualifierID"
-        android:nextFocusForward="@+id/isaID"
+        android:nextFocusForward="@+id/isaId"
         android:textColor="@color/blue"
         android:textSize="@dimen/text_size_small"
         android:visibility="visible" />
@@ -101,7 +101,7 @@
         android:textSize="@dimen/text_size" />
 
     <EditText
-        android:id="@+id/isaID"
+        android:id="@+id/isaId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/isaQualifierHeading"
@@ -124,7 +124,7 @@
         android:layout_alignBaseline="@+id/isaQualifierHeading"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@+id/isaID"
+        android:layout_toRightOf="@+id/isaId"
         android:text="ISA Usage"
         android:textColor="@color/blue"
         android:textSize="@dimen/text_size" />

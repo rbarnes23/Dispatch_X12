@@ -117,5 +117,6 @@
     <string name="signreceiver">Sign</string>
     <string name="save">Save</string>
     <string name="loading">Loading&#8230;</string>
-
+    <string name="addStop">Add Stop</string>
+    
 </resources>

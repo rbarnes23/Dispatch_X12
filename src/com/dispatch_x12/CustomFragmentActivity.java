@@ -3,6 +3,7 @@ package com.dispatch_x12;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.TargetApi;
@@ -40,32 +41,10 @@ import android.widget.Toast;
 
 public abstract class CustomFragmentActivity extends FragmentActivity implements
 		DataToSendListener {
-	private DrawerLayout mDrawerLayout;
+	protected DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	protected static Menu mMenu;
 
-	// public void setToast(String text, int duration) {
-	// Context context = getApplicationContext();
-	// Toast ImageToast = new Toast(context);
-	// LinearLayout toastLayout = new LinearLayout(context);
-	//
-	// toastLayout.setOrientation(LinearLayout.HORIZONTAL);
-	// toastLayout.setBackgroundResource(R.drawable.rounded_edges);
-	// ImageView image = new ImageView(context);
-	// image.setImageResource(R.drawable.appicon);
-	// toastLayout.addView(image);
-	// TextView tv = new TextView(context);
-	// tv.setTextColor(Color.BLUE);
-	// tv.setTextSize(getResources().getDimension(R.dimen.text_size_small));
-	// tv.setTypeface(Typeface.DEFAULT);
-	// tv.setBackgroundColor(Color.TRANSPARENT);
-	// tv.setText(text);
-	// toastLayout.addView(tv);
-	// ImageToast.setView(toastLayout);
-	// ImageToast.setDuration(duration == 0 ? Toast.LENGTH_SHORT
-	// : Toast.LENGTH_LONG);
-	// ImageToast.show();
-	// }
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 	protected void initializeActionBar() {
@@ -239,6 +218,12 @@ public abstract class CustomFragmentActivity extends FragmentActivity implements
 			String className = currentFragment.getClass().getName();
 			if (className.contentEquals("com.dispatch_x12.CompanyEntry")) {
 				JSONObject msg = new JSONObject();
+				try {
+					msg.put("type", 0);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				sendDataToCompanyEntry(msg);
 			}
 			if (className.contentEquals("com.dispatch_x12.UserEntry")) {
@@ -248,6 +233,10 @@ public abstract class CustomFragmentActivity extends FragmentActivity implements
 			if (className.contentEquals("com.dispatch_x12.VehicleEntry")) {
 				JSONObject msg = new JSONObject();
 				sendDataToVehicleEntry(msg);
+			}
+			if (className.contentEquals("com.dispatch_x12.X204Entry")) {
+				JSONObject msg = new JSONObject();
+				sendDataToX204Entry(msg);
 			}
 
 			ret = true;
@@ -348,6 +337,14 @@ public abstract class CustomFragmentActivity extends FragmentActivity implements
 		VehicleEntry Obj = (VehicleEntry) getSupportFragmentManager()
 				.findFragmentById(R.id.frag_master);
 		Obj.setMessage(msg);
+	}
+
+	@Override
+	public void sendDataToX204Entry(JSONObject msg) {
+		X204Entry Obj = (X204Entry) getSupportFragmentManager()
+				.findFragmentById(R.id.frag_master);
+		Obj.setMessage(msg);
+		mMenu.findItem(R.id.addStop).setVisible(true);
 	}
 	
 	@Override
