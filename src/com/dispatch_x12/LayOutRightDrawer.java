@@ -3,36 +3,29 @@ package com.dispatch_x12;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.json.JSONException;
-
-import com.edilibrary.Create210;
-import com.edilibrary.Create997;
-
-//import org.osmdroid.views.MapView;
+import com.dispatch_x12.MainActivity;
+import com.dispatch_x12.R;
+import com.dispatch_x12.adapters.CompanyListAdapter;
+import com.dispatch_x12.adapters.LoadFilterAdapter;
+import com.dispatch_x12.adapters.LoadListAdapter;
+import com.dispatch_x12.adapters.UserListAdapter;
+import com.dispatch_x12.adapters.VehicleListAdapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
-//import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-//import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-//import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-//import android.widget.SpinnerAdapter;
-//import android.widget.Toast;
-//import android.widget.AdapterView.OnItemClickListener;
+import com.dispatch_x12.utilities.Constant;
+
 
 public class LayOutRightDrawer extends Fragment {
 	ViewGroup root;
@@ -116,7 +109,7 @@ public class LayOutRightDrawer extends Fragment {
 		super.onAttach(activity);
 	}
 
-	void setMessage(int type, ArrayList<HashMap<String, String>> msg) {
+	public void setMessage(int type, ArrayList<HashMap<String, String>> msg) {
 		/*
 		 * Dont use notifydatasetchanged because we can only have the original
 		 * list size onceI also want to change the adapter based on what i want

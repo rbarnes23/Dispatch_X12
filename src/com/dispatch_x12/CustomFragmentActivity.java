@@ -38,13 +38,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.dispatch_x12.utilities.Constant;
+import com.dispatch_x12.services.ChatService;
 
 public abstract class CustomFragmentActivity extends FragmentActivity implements
-		DataToSendListener {
+		IDataToSendListener {
 	protected DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	protected static Menu mMenu;
-
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 	protected void initializeActionBar() {
@@ -257,11 +258,11 @@ public abstract class CustomFragmentActivity extends FragmentActivity implements
 		FragmentManager fm = getSupportFragmentManager();
 		if (fm.getBackStackEntryCount() > 0) {
 			fm.popBackStackImmediate();
-			//Set layout back to the master detail default
-			DrawerLayout drawerLayout=(DrawerLayout) findViewById(R.id.drawer_layout);
+			// Set layout back to the master detail default
+			DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 			LinearLayout detailLayout = (LinearLayout) findViewById(R.id.linearlayout02);
 			drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-			int mHeight=drawerLayout.getBottom();
+			int mHeight = drawerLayout.getBottom();
 			setLayoutParams(detailLayout, mHeight);
 			mMenu.findItem(R.id.save).setVisible(false);
 		} else {
@@ -295,7 +296,8 @@ public abstract class CustomFragmentActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void sendDataToRightDrawer(int type,ArrayList<HashMap<String, String>> msg) {
+	public void sendDataToRightDrawer(int type,
+			ArrayList<HashMap<String, String>> msg) {
 		LayOutRightDrawer Obj = (LayOutRightDrawer) getSupportFragmentManager()
 				.findFragmentById(R.id.right_drawer);
 		Obj.setMessage(type, msg);
@@ -332,6 +334,7 @@ public abstract class CustomFragmentActivity extends FragmentActivity implements
 		Obj.setMessage(msg);
 
 	}
+
 	@Override
 	public void sendDataToVehicleEntry(JSONObject msg) {
 		VehicleEntry Obj = (VehicleEntry) getSupportFragmentManager()
@@ -346,7 +349,7 @@ public abstract class CustomFragmentActivity extends FragmentActivity implements
 		Obj.setMessage(msg);
 		mMenu.findItem(R.id.addStop).setVisible(true);
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();

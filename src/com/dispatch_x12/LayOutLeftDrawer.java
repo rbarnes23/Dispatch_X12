@@ -2,6 +2,13 @@ package com.dispatch_x12;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import com.dispatch_x12.AppSettings;
+import com.dispatch_x12.R;
+import com.dispatch_x12.adapters.DetailInfo;
+import com.dispatch_x12.adapters.ExpandableMenuAdapter;
+import com.dispatch_x12.adapters.HeaderInfo;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -21,8 +28,8 @@ public class LayOutLeftDrawer extends Fragment {
 	private ArrayList<HeaderInfo> groupList = new ArrayList<HeaderInfo>();
 
 	// Create ArrayList to hold parent Items and Child Items
-	//private ArrayList<String> parentItems = new ArrayList<String>(); 
-	//private ArrayList<Object> childItems = new ArrayList<Object>();
+	// private ArrayList<String> parentItems = new ArrayList<String>();
+	// private ArrayList<Object> childItems = new ArrayList<Object>();
 	// private ArrayList<HashMap<String, String>> mGroupList = new
 	// ArrayList<HashMap<String, String>>();
 	// private List<String> mDetailList = new ArrayList<String>();
@@ -39,17 +46,17 @@ public class LayOutLeftDrawer extends Fragment {
 		mContext = inflater.getContext();
 		if (savedInstanceState == null) {
 			root = (ViewGroup) inflater.inflate(R.layout.menu, null);
-			
+
 			// Create Expandable List and set it's properties
 			menuList = (ExpandableListView) root
 					.findViewById(R.id.expandableList);
 
 			menuList.setDividerHeight(1);
-//	        menuList.setGroupIndicator(null);
-	        menuList.setClickable(true);
-	        
-//	        listAdapter = new MyExpandableAdapter(parentItems, childItems);
-//		      listAdapter.setInflater(inflater, mContext); 
+			// menuList.setGroupIndicator(null);
+			menuList.setClickable(true);
+
+			// listAdapter = new MyExpandableAdapter(parentItems, childItems);
+			// listAdapter.setInflater(inflater, mContext);
 			addMemberToGroup("Messages", "Messages");
 			addMemberToGroup("Forms", "204");
 			addMemberToGroup("Forms", "210");
@@ -69,10 +76,10 @@ public class LayOutLeftDrawer extends Fragment {
 
 			// attach the adapter to thpe list
 			menuList.setAdapter(listAdapter);
-	        listAdapter.notifyDataSetChanged();
+			listAdapter.notifyDataSetChanged();
 			menuList.expandGroup(2);
 
-		//expandAll();
+			// expandAll();
 		}
 		return root;
 	}
@@ -101,7 +108,7 @@ public class LayOutLeftDrawer extends Fragment {
 	void init(ViewGroup root) {
 	}
 
-	void setMessage(String msg) {
+	public void setMessage(String msg) {
 		String mMemberid = AppSettings.getMemberid();
 
 	}

@@ -18,6 +18,15 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dispatch_x12.MainActivity;
+import com.dispatch_x12.R;
+import com.dispatch_x12.adapters.VehicleRegistrationAdapter;
+import com.dispatch_x12.adapters.MergeAdapter;
+import com.dispatch_x12.adapters.InsuranceAdapter;
+import com.dispatch_x12.utilities.Constant;
+import com.dispatch_x12.services.ChatService;
+import com.dispatch_x12.utilities.JsonHelper;
+
 public class VehicleEntry extends ListFragment {
 	ViewGroup root;
 	Context mContext;
@@ -101,7 +110,7 @@ public class VehicleEntry extends ListFragment {
 
 
 	
-	void setMessage(JSONObject msg) {
+	public void setMessage(JSONObject msg) {
 		if (msg.optInt("entryType") == 1) {
 			try {
 				setAdapterList(msg);

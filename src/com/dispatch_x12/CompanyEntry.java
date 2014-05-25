@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.regex.Matcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.dispatch_x12.adapters.MergeAdapter;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -28,6 +29,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import com.dispatch_x12.adapters.InsuranceAdapter;
+import com.dispatch_x12.adapters.EmailListAdapter;
+import com.dispatch_x12.adapters.AddressAdapter;
+import com.dispatch_x12.adapters.CustomerAdapter;
+import com.dispatch_x12.adapters.PhoneListAdapter;
+import com.dispatch_x12.utilities.Constant;
+import com.dispatch_x12.utilities.JsonHelper;
+import com.dispatch_x12.services.ChatService;
 
 public class CompanyEntry extends ListFragment {
 	ViewGroup root;

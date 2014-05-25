@@ -1,5 +1,7 @@
 package com.dispatch_x12;
 
+import com.dispatch_x12.services.ChatService;
+
 import android.app.Application;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -26,7 +28,7 @@ public class X12Application extends Application {
 		bundle.putString("memberid", AppSettings.getMemberid());
 		bundle.putString("serverip", AppSettings.getNetworkid());
 		bundle.putInt("serverport", 2004);
-		Intent commIntent = new Intent(getApplicationContext(), com.dispatch_x12.ChatService.class);
+		Intent commIntent = new Intent(getApplicationContext(), ChatService.class);
 		commIntent.putExtras(bundle);
 		startService(commIntent);
 

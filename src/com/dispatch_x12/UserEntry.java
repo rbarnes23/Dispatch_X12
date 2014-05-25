@@ -18,6 +18,18 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dispatch_x12.MainActivity;
+import com.dispatch_x12.R;
+import com.dispatch_x12.adapters.UserAdapter;
+import com.dispatch_x12.adapters.MergeAdapter;
+import com.dispatch_x12.adapters.AddressAdapter;
+import com.dispatch_x12.adapters.EmailListAdapter;
+import com.dispatch_x12.adapters.PhoneListAdapter;
+import com.dispatch_x12.adapters.PayrollAdapter;
+import com.dispatch_x12.utilities.Constant;
+import com.dispatch_x12.services.ChatService;
+import com.dispatch_x12.utilities.JsonHelper;
+
 public class UserEntry extends ListFragment {
 	ViewGroup root;
 	Context mContext;
@@ -142,7 +154,7 @@ public class UserEntry extends ListFragment {
 		}
 	}
 
-	void setMessage(JSONObject msg) {
+	public void setMessage(JSONObject msg) {
 		if (msg.optInt("entryType") == 1) {
 			try {
 				setAdapterList(msg);

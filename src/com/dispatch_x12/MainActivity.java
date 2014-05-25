@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.osmdroid.views.MapView;
@@ -37,6 +36,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dispatch_x12.utilities.Constant;
+import com.dispatch_x12.utilities.JsonHelper;
 
 @SuppressLint("NewApi")
 public class MainActivity extends CustomFragmentActivity {

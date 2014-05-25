@@ -3,20 +3,22 @@ package com.dispatch_x12;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.dispatch_x12.AppSettings;
+import com.dispatch_x12.CustomAutoCompleteTextView;
+import com.dispatch_x12.MainActivity;
+import com.dispatch_x12.MessageProcessing;
+import com.dispatch_x12.R;
+import com.dispatch_x12.utilities.Constant;
 import com.edilibrary.Create210;
-import com.edilibrary.Create990;
 import com.edilibrary.Create997;
-import com.edilibrary.EdiSupport;
 import com.tokenlibrary.Token;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -28,13 +30,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Toast;
-
+import com.dispatch_x12.services.ChatService;
 
 public class LayOutOne extends Fragment {
 	ViewGroup root;
@@ -273,7 +274,7 @@ public class LayOutOne extends Fragment {
 		 * buttonListener.onButtonPressed(msg); } });
 		 */}
 
-	void setMessage(JSONObject msg) {
+	public void setMessage(JSONObject msg) {
 		String type = null;
 		type = msg.optString("type");
 		if (type.contentEquals("findmember")) {

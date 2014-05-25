@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -44,10 +43,16 @@ import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.PathOverlay;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 
+import com.dispatch_x12.AppSettings;
+import com.dispatch_x12.MainActivity;
+import com.dispatch_x12.R;
+import com.dispatch_x12.adapters.StopListAdapter;
+import com.dispatch_x12.map.POIInfoWindow;
+import com.dispatch_x12.map.ViaPointInfoWindow;
+import com.dispatch_x12.utilities.CalendarUtils;
+
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -64,18 +69,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.dispatch_x12.utilities.Constant;
 
 public class LayOutTwo extends Fragment implements MapEventsReceiver,
 		LocationListener, SensorEventListener {
@@ -323,25 +326,27 @@ public class LayOutTwo extends Fragment implements MapEventsReceiver,
 		mMap.setTileSource(tileSource);
 	}
 
-	void setMessage(Message msg) {
+	public void setMessage(Message msg) {
 		Bundle bundle = msg.getData();
 		if (msg.what == Constant.PAYDRIVER) {
 			// double len = mRoad.mLength;
 			try {
 				mPayList = new JSONArray(bundle.getString("message"));
-				
+
 				String title = "DriverSelected";
-				
+
 				String place = "552 W Davis Blvd,Tampa,FL 33606";
 				int status = 1;
 				long startDate = Calendar.getInstance().getTimeInMillis();
-				String addInfo = Calendar.getInstance().getTime().toLocaleString();
+				String addInfo = Calendar.getInstance().getTime()
+						.toLocaleString();
 				boolean isRemind = true;
 				boolean isMailService = true;
-				CalendarUtils.addEventToCalendar(mContext, title, addInfo, place,
-						status, startDate, isRemind, isMailService);
-				//Intent intent = CalendarUtilsIntent.addCalendarEventbyIntent();
-				//startActivity(intent);
+				CalendarUtils.addEventToCalendar(mContext, title, addInfo,
+						place, status, startDate, isRemind, isMailService);
+				// Intent intent =
+				// CalendarUtilsIntent.addCalendarEventbyIntent();
+				// startActivity(intent);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -376,7 +381,7 @@ public class LayOutTwo extends Fragment implements MapEventsReceiver,
 	// R.id.fullname, R.id.message });
 	//
 	//
-	
+
 	// // intervalAdapter = new IntervalAdapter(mContext, msg,
 	// // R.layout.messagerowlist, new String[] { "intervalno",
 	// // "pacetext" }, new int[] { R.id.fullname, R.id.message });
@@ -533,6 +538,7 @@ public class LayOutTwo extends Fragment implements MapEventsReceiver,
 		mRoad = null;
 		new UpdateRoadTask().execute(mWayPoints);
 	}
+
 	public void getRoadAsyncOld() {
 		mRoad = null;
 		GeoPoint roadmStartPoint = null;
@@ -921,7 +927,7 @@ public class LayOutTwo extends Fragment implements MapEventsReceiver,
 			mRoad = result;
 			updateUIWithRoad(result);
 			updateUIWithItineraryMarkers();
-			//mStopListAdapter.notifyDataSetChanged();
+			// mStopListAdapter.notifyDataSetChanged();
 			// reb getPOIAsync(poiTagText.getText().toString());
 		}
 	}

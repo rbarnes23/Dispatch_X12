@@ -23,6 +23,12 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 
+import com.dispatch_x12.adapters.DetailInfo;
+import com.dispatch_x12.adapters.HeaderInfo;
+import com.dispatch_x12.map.GeocoderNominatim;
+import com.dispatch_x12.utilities.Constant;
+import com.dispatch_x12.utilities.JsonHelper;
+
 public class MessageProcessing {
 	private static String mTo = null;
 	private static boolean mLoggedin;

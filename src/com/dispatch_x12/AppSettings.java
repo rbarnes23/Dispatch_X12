@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Pattern;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -30,6 +29,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.dispatch_x12.utilities.Constant;
 
 public class AppSettings extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener {
@@ -354,9 +354,9 @@ public class AppSettings extends PreferenceActivity implements
 		return getString(sContext, AppSettings.zoomlevel);
 	}
 
-//	public static void setDefaultZoomLevel(int defaultzoomlevel) {
-//		putInt(sContext, AppSettings.defaultzoomlevel, defaultzoomlevel);
-//	}
+	// public static void setDefaultZoomLevel(int defaultzoomlevel) {
+	// putInt(sContext, AppSettings.defaultzoomlevel, defaultzoomlevel);
+	// }
 
 	public static int getLastLocation() {
 		return getInt(sContext, AppSettings.lastlocation);
@@ -393,8 +393,7 @@ public class AppSettings extends PreferenceActivity implements
 	public static void setUom(int lastlocation) {
 		putString(sContext, AppSettings.uom, uom);
 	}
-	
-	
+
 	private static int getInt(Context context, String tag) {
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(context);
